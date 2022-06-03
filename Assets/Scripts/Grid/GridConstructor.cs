@@ -23,8 +23,7 @@ public class GridConstructor : MonoBehaviour
     private int _colsCount;
 
     private int _rowsCount;
-    [Space]
-    [SerializeField] private string _levelNumber;
+    [Space] [SerializeField] private string _levelName;
 
     #region Constructor Navigation
 
@@ -35,30 +34,36 @@ public class GridConstructor : MonoBehaviour
         _gridLayoutGroup.enabled = true;
 
         GenerateGrid(_cellConstructPrefab, _rowsCount, _colsCount);
-        
+
         StartCoroutine(DisableGridLayoutRoutine());
     }
 
     public void StartSaveRedacting()
     {
         StartGridBuilding();
-        SaveData loadedLvl = LoadLevel(_levelNumber);
+        SaveData loadedLvl = LoadLevel(_levelName);
+
+        if (loadedLvl is null)
+        {
+            return;
+        }
+
         ContinueLevelRedacting(loadedLvl);
     }
 
     private void ContinueLevelRedacting(SaveData loadedLvl)
     {
         int count = 0;
-        
+
         for (int i = 0; i < _rowsCount; i++)
         {
             for (int j = 0; j < _colsCount; j++)
             {
                 GridCellConstruct currentCell = _cells[i, j] as GridCellConstruct;
-                
+
                 var temp = _cells[i, j].GetComponent<GridCellConstruct>();
 
-                
+
                 temp.SetCellType(loadedLvl.CellTypes[count]);
                 count++;
             }
@@ -68,10 +73,16 @@ public class GridConstructor : MonoBehaviour
     public void StartLevel()
     {
         StartGridBuilding();
-        SaveData loadedLvl = LoadLevel(_levelNumber);
+        SaveData loadedLvl = LoadLevel(_levelName);
+
+        if (loadedLvl is null)
+        {
+            return;
+        }
+
         InstantiateLoadedGrid(loadedLvl);
     }
-    
+
     public SaveData LoadLevel(string levelNumber)
     {
         string loadPath = Application.dataPath + string.Format($"/Resources/Levels/Level_{levelNumber}.json");
@@ -96,7 +107,7 @@ public class GridConstructor : MonoBehaviour
 
         string json = JsonUtility.ToJson(currentLevel);
 
-        string path = Application.dataPath + string.Format($"/Resources/Levels/Level_{_levelNumber}.json");
+        string path = Application.dataPath + string.Format($"/Resources/Levels/Level_{_levelName}.json");
 
         File.WriteAllText(path, json);
     }
@@ -148,7 +159,7 @@ public class GridConstructor : MonoBehaviour
             for (int j = 0; j < colsCount; j++)
             {
                 GameObject instantiatedCell = Instantiate(cellPrefab, transform);
-                
+
                 AddCellToArray(instantiatedCell, i, j);
                 _cells[i, j].name = $"Cell [{i}, {j}]";
                 _cells[i, j].Coordinates = new Vector2(i, j);
@@ -183,14 +194,14 @@ public class GridConstructor : MonoBehaviour
                         gridCell = Instantiate(_cellNodePrefab, Vector3.zero, Quaternion.identity, transform);
                         AddCellToArray(gridCell, i, j);
                         node = gridCell.GetComponent<CellNode>();
-                        node.ThisNodeType = CellNode.NodeType.black;
+                        node.ThisNodeType = CellNode.NodeType.dark;
                         node.requiredAmount = lvl.RequiredAmounts[count];
                         break;
                     case GridCellConstruct.CellType.light:
                         gridCell = Instantiate(_cellNodePrefab, Vector3.zero, Quaternion.identity, transform);
                         AddCellToArray(gridCell, i, j);
                         node = gridCell.GetComponent<CellNode>();
-                        node.ThisNodeType = CellNode.NodeType.white;
+                        node.ThisNodeType = CellNode.NodeType.light;
                         node.requiredAmount = lvl.RequiredAmounts[count];
                         break;
                     case GridCellConstruct.CellType.empty:
@@ -215,10 +226,10 @@ public class GridConstructor : MonoBehaviour
         yield return new WaitForEndOfFrame();
         foreach (GridCell cell in _cells)
         {
-           if (cell.TryGetComponent<EmptyCell>(out _))
-           {
-               cell.gameObject.SetActive(false);
-           }
+            if (cell.TryGetComponent<EmptyCell>(out _))
+            {
+                cell.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -230,7 +241,7 @@ public class GridConstructor : MonoBehaviour
         {
             return;
         }
-        
+
         foreach (var cell in _cells)
         {
             Destroy(cell.gameObject);
@@ -251,18 +262,18 @@ public class SaveData
         RequiredAmounts = new int[grid.Length];
 
         int count = 0;
-        
+
         foreach (GridCell item in grid)
         {
             if (!(item is GridCellConstruct newItem))
             {
                 return;
             }
-            
+
             Coordinates[count] = newItem.Coordinates;
             CellTypes[count] = newItem.ThisCellType;
             RequiredAmounts[count] = newItem.requiredAmount;
-            
+
             count++;
         }
     }
