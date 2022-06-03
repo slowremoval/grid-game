@@ -176,7 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775126976a434ad1902df95367d4a4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tmPro: {fileID: 9162828274552254211}
+  Coordinates: {x: 0, y: 0}
+  _textMeshProUGUI: {fileID: 9162828274552254211}
   requiredAmount: 0
   currentAmount: 0
   ThisNodeType: 0

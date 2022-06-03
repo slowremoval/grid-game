@@ -16,7 +16,7 @@ public class CellNode : GridCell
     
     public NodeType ThisNodeType;
 
-    private void OnValidate()
+    private void Start()
     {
         if (_textMeshProUGUI == null)
         {

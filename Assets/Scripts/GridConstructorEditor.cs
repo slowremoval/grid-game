@@ -18,10 +18,11 @@ public class GridConstructorEditor : Editor
         }
         
         GUI.backgroundColor = Color.cyan;
-        if (GUILayout.Button("Finish Grid Building", GUILayout.Height(37)))
+        if (GUILayout.Button("Start Save Redacting", GUILayout.Height(37)))
         {
-            builder.FinishGridBuilding();
+            builder.StartSaveRedacting();
         }
+        
         
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
@@ -30,6 +31,11 @@ public class GridConstructorEditor : Editor
         if (GUILayout.Button("Save Level", GUILayout.Height(37)))
         {
             builder.SaveLevel();
+        } 
+        GUI.backgroundColor = Color.white;
+        if (GUILayout.Button("Start Level", GUILayout.Height(37)))
+        {
+            builder.StartLevel();
         }
         
         GUILayout.EndHorizontal();
