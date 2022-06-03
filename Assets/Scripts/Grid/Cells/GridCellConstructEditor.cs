@@ -40,7 +40,7 @@ public class GridCellConstructEditor : Editor
         
         GUILayout.EndHorizontal();
         
-        NumberButtons(builder, 9);
+        NumberButtons(builder, 21);
     }
 
     private void NumberButtons(GridCellConstruct part, int number)
@@ -51,7 +51,7 @@ public class GridCellConstructEditor : Editor
             GUILayout.BeginHorizontal();
             for (int i = 0; i < 3; i++)
             {
-                if (GUILayout.Button((j).ToString(),  GUILayout.Height(50)))
+                if (GUILayout.Button(j.ToString(),  GUILayout.Height(42)))
                 {
                     part.SetRequiredAmount(j);
                     
