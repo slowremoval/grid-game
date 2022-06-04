@@ -160,7 +160,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1800, y: 1100}
+  m_SizeDelta: {x: 1900, y: 1100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &492472907
 MonoBehaviour:
@@ -174,13 +174,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385f200279a8e094d95b33a445e8852c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Nodes: []
+  SimpleCells: []
   _rectTransform: {fileID: 492472906}
   _gridLayoutGroup: {fileID: 492472908}
   _cellPrefab: {fileID: 832676399958876413, guid: b12fc3ca49be6024fb5c6077d30b972f, type: 3}
   _cellConstructPrefab: {fileID: 832676399958876413, guid: a4532cca58c653142b136de98bcae43f, type: 3}
   _cellNodePrefab: {fileID: 6057325670970362508, guid: 62c8f51d00942454da9192b87af9f9c2, type: 3}
   _cellEmptyPrefab: {fileID: 3793213121527480594, guid: e9ef6d5bc619b8e43a9998a9afcadb5c, type: 3}
-  _levelName: 
+  _levelName: 03
 --- !u!114 &492472908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,14 +196,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 40
+    m_Left: 60
     m_Right: 20
-    m_Top: 45
+    m_Top: 20
     m_Bottom: 20
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 125, y: 125}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 10
