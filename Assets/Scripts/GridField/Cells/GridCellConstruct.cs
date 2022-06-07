@@ -12,6 +12,7 @@ namespace GridField.Cells
         [SerializeField] private GameObject _visualization;
         
         public int requiredAmount { get; private set; }
+        
         public CellType ThisCellType;
 
         private Color _color;
@@ -26,7 +27,6 @@ namespace GridField.Cells
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
-
             if (Input.GetMouseButton(1))
             {
                 ThisCellType =
@@ -81,7 +81,7 @@ namespace GridField.Cells
                     break;
             }
         }
-
+        
         public void SetCellType(CellType cellType)
         {
             ThisCellType = cellType;

@@ -110,10 +110,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3768802421394588916
 CanvasRenderer:
@@ -180,8 +180,7 @@ MonoBehaviour:
   _textMeshProUGUI: {fileID: 9162828274552254211}
   _visualization: {fileID: 3077066951339663372}
   requiredAmount: 0
-  currentAmount: 0
-  ThisNodeType: 0
+  GridData: {fileID: 0}
 --- !u!1 &9149007107159654740
 GameObject:
   m_ObjectHideFlags: 0

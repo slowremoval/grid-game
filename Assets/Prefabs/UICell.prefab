@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7767806148957580933
 CanvasRenderer:
@@ -64,6 +64,7 @@ MonoBehaviour:
   _defaultColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
   _firstColor: {r: 0.990566, g: 0.8435401, b: 0.11681201, a: 0.7294118}
   _secondColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0.7294118}
+  _unactiveSides: 
 --- !u!1 &1092589541965593856
 GameObject:
   m_ObjectHideFlags: 0

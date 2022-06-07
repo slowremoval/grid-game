@@ -13,6 +13,7 @@ namespace GridField.Cells
         [SerializeField] private Color _firstColor;
         [SerializeField] private Color _secondColor;
 
+
         private Image _cellImage;
 
         public CellType CellColor { get; private set; }
@@ -26,8 +27,6 @@ namespace GridField.Cells
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            base.OnPointerDown(eventData);
-
             SetColorByClick();
         }
 
