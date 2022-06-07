@@ -16,12 +16,22 @@ namespace GridField
             GUI.backgroundColor = Color.yellow;
             if (GUILayout.Button("Start Grid Building", GUILayout.Height(37)))
             {
+                if (Application.isPlaying == false)
+                {
+                    return;
+                }
+                
                 builder.StartGridBuilding();
             }
         
             GUI.backgroundColor = Color.cyan;
             if (GUILayout.Button("Start Save Redacting", GUILayout.Height(37)))
             {
+                if (Application.isPlaying == false)
+                {
+                    return;
+                }
+                
                 builder.StartSaveRedacting();
             }
         
@@ -32,11 +42,21 @@ namespace GridField
             GUI.backgroundColor = Color.green;
             if (GUILayout.Button("Save Level", GUILayout.Height(37)))
             {
+                if (Application.isPlaying == false)
+                {
+                    return;
+                }
+                
                 builder.SaveLevel();
             } 
             GUI.backgroundColor = Color.white;
             if (GUILayout.Button("Start Level", GUILayout.Height(37)))
             {
+                if (Application.isPlaying == false)
+                {
+                    return;
+                }
+                
                 builder.StartLevel();
             }
         
