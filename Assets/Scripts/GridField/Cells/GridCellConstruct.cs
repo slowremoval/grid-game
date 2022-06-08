@@ -10,13 +10,16 @@ namespace GridField.Cells
         [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
         [SerializeField] private GameObject _visualization;
-        
+
         public int requiredAmount { get; private set; }
-        
+
         public CellType ThisCellType;
 
         private Color _color;
+
         private Image _currentCellVisualization;
+
+        
 
         public void SetRequiredAmount(int amount)
         {
@@ -81,7 +84,7 @@ namespace GridField.Cells
                     break;
             }
         }
-        
+
         public void SetCellType(CellType cellType)
         {
             ThisCellType = cellType;

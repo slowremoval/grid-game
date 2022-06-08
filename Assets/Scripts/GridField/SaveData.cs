@@ -9,7 +9,7 @@ namespace GridField
         public int[] RequiredAmounts;
         public CellType[] CellTypes;
         public Vector2 GridSize;
-        public CellSide[] UnactiveSide;
+        public Vector4[] UnactiveSidesVector;
 
         public void SetSaveData(GridCell[,] grid)
         {
@@ -17,7 +17,7 @@ namespace GridField
             Coordinates = new Vector2[grid.Length];
             CellTypes = new CellType[grid.Length];
             RequiredAmounts = new int[grid.Length];
-            UnactiveSide = new CellSide[grid.Length];
+            UnactiveSidesVector = new Vector4[grid.Length];
             
             int count = 0;
 
@@ -31,7 +31,9 @@ namespace GridField
                 Coordinates[count] = newItem.Coordinates;
                 CellTypes[count] = newItem.ThisCellType;
                 RequiredAmounts[count] = newItem.requiredAmount;
-                UnactiveSide[count] = newItem.UnactiveSide;
+                
+                UnactiveSidesVector[count] = new Vector4((int)newItem.UnactiveSides[0], (int)newItem.UnactiveSides[1],
+                    (int)newItem.UnactiveSides[2], (int)newItem.UnactiveSides[3]);
 
                 count++;
             }

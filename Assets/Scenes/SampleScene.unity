@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -840, y: -480}
+  m_AnchoredPosition: {x: -839.99994, y: -479.99997}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &492472907
@@ -181,7 +181,7 @@ MonoBehaviour:
   _cellNodePrefab: {fileID: 6057325670970362508, guid: 62c8f51d00942454da9192b87af9f9c2, type: 3}
   _cellEmptyPrefab: {fileID: 3793213121527480594, guid: e9ef6d5bc619b8e43a9998a9afcadb5c, type: 3}
   _spacing: 20
-  _levelName: 03
+  _levelName: 01
 --- !u!222 &492472910
 CanvasRenderer:
   m_ObjectHideFlags: 0

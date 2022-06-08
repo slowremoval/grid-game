@@ -7,6 +7,10 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/GridConnectionProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/DialogueListWrapper.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -75,6 +79,7 @@
       <workItem from="1654539761428" duration="8203000" />
       <workItem from="1654595099873" duration="9541000" />
       <workItem from="1654629219710" duration="493000" />
+      <workItem from="1654674280734" duration="15743000" />
     </task>
     <servers />
   </component>

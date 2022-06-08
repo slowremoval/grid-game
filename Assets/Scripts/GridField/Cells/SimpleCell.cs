@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,19 +13,16 @@ namespace GridField.Cells
         [SerializeField] private Color _defaultColor;
         [SerializeField] private Color _firstColor;
         [SerializeField] private Color _secondColor;
-
-
-        private Image _cellImage;
-
-        public CellType CellColor { get; private set; }
-
-        public event Action OnColorChanged;
         
-        private void Awake()
+        private Image _cellImage;
+        
+        public event Action OnColorChanged;
+
+        private void Start()
         {
             _cellImage = _visualization.GetComponent<Image>();
         }
-
+        
         public override void OnPointerDown(PointerEventData eventData)
         {
             SetColorByClick();
@@ -32,18 +30,17 @@ namespace GridField.Cells
 
         private void SetColorByClick()
         {
-            
             if (Input.GetMouseButton(0))
             {
                 if (_cellImage.color == _firstColor)
                 {
                     _cellImage.color = _defaultColor;
-                    CellColor = CellType.empty;
+                    CellType = CellType.empty;
                 }
                 else
                 {
                     _cellImage.color = _firstColor;
-                    CellColor = CellType.light;
+                    CellType = CellType.light;
                 }
             }
             else if (Input.GetMouseButton(1))
@@ -51,15 +48,15 @@ namespace GridField.Cells
                 if (_cellImage.color == _secondColor)
                 {
                     _cellImage.color = _defaultColor;
-                    CellColor = CellType.empty;
+                    CellType = CellType.empty;
                 }
                 else
                 {
                     _cellImage.color = _secondColor;
-                    CellColor = CellType.dark;
+                    CellType = CellType.dark;
                 }
             }
-            
+
             OnColorChanged?.Invoke();
         }
     }

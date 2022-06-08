@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using GridField.Cells;
@@ -45,27 +46,6 @@ namespace GridField
             SetGridCenter();
         }
 
-        private void ContinueLevelRedacting(SaveData loadedLvl)
-        {
-            DesubscribeToSimpleCellsChanging();
-            ClearGrid();
-            SetGridProperties((int)loadedLvl.GridSize.x, (int)loadedLvl.GridSize.y);
-            
-            GenerateGrid(_cellConstructPrefab);
-            int count = 0;
-
-            for (int i = 0; i < _rowsCount; i++)
-            {
-                for (int j = 0; j < _colsCount; j++)
-                {
-                    GridCellConstruct currentCell = _cells[i, j].GetComponent<GridCellConstruct>();
-                    currentCell.SetCellType(loadedLvl.CellTypes[count]);
-                    currentCell.SetRequiredAmount(loadedLvl.RequiredAmounts[count]);
-                    count++;
-                }
-            }
-        }
-
         public void StartLevel()
         {
             DesubscribeToSimpleCellsChanging();
@@ -111,6 +91,28 @@ namespace GridField
         }
 
         #endregion
+
+        private void ContinueLevelRedacting(SaveData loadedLvl)
+        {
+            DesubscribeToSimpleCellsChanging();
+            ClearGrid();
+            SetGridProperties((int)loadedLvl.GridSize.x, (int)loadedLvl.GridSize.y);
+            
+            GenerateGrid(_cellConstructPrefab);
+            int count = 0;
+
+            for (int i = 0; i < _rowsCount; i++)
+            {
+                for (int j = 0; j < _colsCount; j++)
+                {
+                    GridCellConstruct currentCell = _cells[i, j].GetComponent<GridCellConstruct>();
+                    currentCell.SetCellType(loadedLvl.CellTypes[count]);
+                    currentCell.SetRequiredAmount(loadedLvl.RequiredAmounts[count]);
+                    
+                    count++;
+                }
+            }
+        }
 
         private void DesubscribeToSimpleCellsChanging()
         {
@@ -238,30 +240,36 @@ namespace GridField
                 }
             }
             SetGridCenter();
-            DeactivateEmptyCells();
+            StartCoroutine(
+                DeactivateEmptyCells());
         }
 
         private void ConfigureSimpleCell(SaveData lvl, int i, int j, int count)
         {
             GameObject currentCell = InstantiateCell(_cellPrefab, i, j);
             SimpleCell simpleCell = currentCell.GetComponent<SimpleCell>();
-            simpleCell.UnactiveSide = lvl.UnactiveSide[count];
+            
+            simpleCell.SetSidesProperties(lvl.UnactiveSidesVector[count], simpleCell);
+            simpleCell.GridData = this;
+            
             SimpleCells.Add(simpleCell);
         }
-
         private void ConfigureNode(SaveData lvl, int i, int j, int count, CellType type)
         {
             GameObject currentCell = InstantiateCell(_cellNodePrefab, i, j);
             CellNode node = currentCell.GetComponent<CellNode>();
-            node.NodeType = type;
+            node.CellType = type;
             node.requiredAmount = lvl.RequiredAmounts[count];
-            node.UnactiveSide = lvl.UnactiveSide[count];
+
+            node.SetSidesProperties(lvl.UnactiveSidesVector[count], node);
+            
             node.GridData = this;
             Nodes.Add(node);
         }
 
-        private void DeactivateEmptyCells()
+        private IEnumerator DeactivateEmptyCells()
         {
+            yield return new WaitForEndOfFrame();
             foreach (GridCell cell in _cells)
             {
                 if (cell.TryGetComponent<EmptyCell>(out _))
@@ -285,5 +293,6 @@ namespace GridField
                 Destroy(cell.gameObject);
             }
         }
+
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,31 +8,30 @@ namespace GridField.Cells
     public class CellNode : GridCell
     {
         [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
+
         [SerializeField] private GameObject _visualization;
 
         [HideInInspector] public int requiredAmount;
+
         [HideInInspector] public int CurrentAmount;
 
-        [HideInInspector] public Grid GridData;
-
-        private CellType _nodeType;
+        //public CellType CellType;
 
         private Image _nodeVisualization;
         
-        public CellType NodeType
-        {
-            get => _nodeType;
-            set
-            {
-                if (value == CellType.empty || value == CellType.simple)
-                {
-                    return;
-                }
-
-                _nodeType = value;
-            }
-        }
-
+        // public CellType NodeType
+        // {
+        //     get => CellType;
+        //     set
+        //     {
+        //         if (value == CellType.empty || value == CellType.simple)
+        //         {
+        //             return;
+        //         }
+        //
+        //         CellType = value;
+        //     }
+        // }
 
 
         public void CheckNeighbours()
@@ -59,12 +59,12 @@ namespace GridField.Cells
 
         private int CheckHorizontal()
         {
-            int count = 0;
+            int rightNeighbours = CheckRightSide();
 
-            count = CheckRightSide(count);
+            int leftNeighbours = CheckLeftSide();
 
-            count = CheckLeftSide(count);
-
+            int count = leftNeighbours + rightNeighbours;
+            
             return count;
         }
 
@@ -84,13 +84,13 @@ namespace GridField.Cells
                     continue;
                 }
 
-                if (simpleCell.UnactiveSide == (CellSide.down))
+                if (simpleCell.UnactiveSides.Contains(CellSide.down))
                 {
                     break;
                 }
 
                 int temp = CheckAxisCell(
-                    simpleCell.CellColor,
+                    simpleCell.CellType,
                     (int)simpleCell.Coordinates.x,
                     (int)Coordinates.x,
                     step);
@@ -126,13 +126,13 @@ namespace GridField.Cells
                     continue;
                 }
 
-                if (simpleCell.UnactiveSide == (CellSide.top))
+                if (simpleCell.UnactiveSides.Contains(CellSide.top))
                 {
                     break;
                 }
 
                 int temp = CheckAxisCell(
-                    simpleCell.CellColor,
+                    simpleCell.CellType,
                     (int)simpleCell.Coordinates.x,
                     (int)Coordinates.x,
                     -step);
@@ -149,8 +149,9 @@ namespace GridField.Cells
             return count;
         }
 
-        private int CheckLeftSide(int count)
+        private int CheckLeftSide()
         {
+            int count = 0;
             int step = 1;
 
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
@@ -167,7 +168,7 @@ namespace GridField.Cells
                     continue;
                 }
 
-                if (simpleCell.UnactiveSide == (CellSide.right))
+                if (simpleCell.UnactiveSides.Contains(CellSide.right))
                 {
                     break;
                 }
@@ -176,7 +177,7 @@ namespace GridField.Cells
                     $"step : {step}, cellCoordinate  : {simpleCell.Coordinates.y}, nodeCoordinate : {(int)Coordinates.y}");
 
                 int temp = CheckAxisCell(
-                    simpleCell.CellColor,
+                    simpleCell.CellType,
                     (int)simpleCell.Coordinates.y,
                     (int)Coordinates.y,
                     -step);
@@ -193,8 +194,9 @@ namespace GridField.Cells
             return count;
         }
 
-        private int CheckRightSide(int count)
+        private int CheckRightSide()
         {
+            int count = 0;
             int step = 1;
 
             foreach (var simpleCell in GridData.SimpleCells)
@@ -209,16 +211,13 @@ namespace GridField.Cells
                     continue;
                 }
 
-                if (simpleCell.UnactiveSide == (CellSide.left))
+                if (simpleCell.UnactiveSides.Contains(CellSide.left))
                 {
                     break;
                 }
-
-                Debug.Log(
-                    $"step : {step}, cellCoordinate  : {simpleCell.Coordinates.y}, nodeCoordinate : {(int)Coordinates.y}");
-
+                
                 int temp = CheckAxisCell(
-                    simpleCell.CellColor,
+                    simpleCell.CellType,
                     (int)simpleCell.Coordinates.y,
                     (int)Coordinates.y,
                     step);
@@ -234,10 +233,11 @@ namespace GridField.Cells
 
             return count;
         }
-
-        private int CheckAxisCell(CellType cellType, int cellCoordinate, int nodeCoordinate, int step)
+        
+        
+        private int CheckAxisCell(CellType cellType, int cellCoordinate, int nodeCoordinate, int step = 1)
         {
-            if (cellType != _nodeType) return 0;
+            if (cellType != CellType) return 0;
 
             if (cellCoordinate == nodeCoordinate) return 0;
 
@@ -277,7 +277,7 @@ namespace GridField.Cells
 
         private void SwitchNodeType()
         {
-            switch (NodeType)
+            switch (CellType)
             {
                 case CellType.dark:
                     _nodeVisualization.color = Color.gray;
