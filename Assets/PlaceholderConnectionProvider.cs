@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GridField.Cells;
 using UnityEngine;
 
-public class GridConnectionProvider : MonoBehaviour
+public class PlaceholderConnectionProvider : MonoBehaviour
 {
     //top - 0
     //down - 1
@@ -12,18 +12,15 @@ public class GridConnectionProvider : MonoBehaviour
 
     [SerializeField] SimpleCell _simpleCell;
 
+    private float _connectionScaleSpeed;
 
     [Header("Placeholder connections")] [Space] [SerializeField]
     private List<GameObject> _placeholderConnections;
 
-    [Header("Cell item connections")] [Space] [SerializeField]
-    private List<GameObject> _cellItemrConnections;
-
-    private float _connectionScaleSpeed;
-
     private void Start()
     {
         ShowGridPlaceholderConnections();
+        //TopConnectionSetActive(true);
     }
 
     private void ShowGridPlaceholderConnections()
@@ -34,6 +31,7 @@ public class GridConnectionProvider : MonoBehaviour
         {
             GameObject connectionSide = _placeholderConnections[index];
             connectionSide.transform.localScale = Vector3.zero;
+
             if (neighbours[index])
             {
                 connectionSide.SetActive(true);
@@ -50,7 +48,7 @@ public class GridConnectionProvider : MonoBehaviour
 
             _connectionScaleSpeed = 5f;
             connectionSide.transform.localScale =
-                Vector3.Lerp(connectionSide.transform.localScale, new Vector3(1.05f, 1, 1),
+                Vector3.Lerp(connectionSide.transform.localScale, new Vector3(1.025f, 1.025f, 1),
                     Time.deltaTime * _connectionScaleSpeed);
         }
     }

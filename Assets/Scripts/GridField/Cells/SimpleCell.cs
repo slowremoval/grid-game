@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,7 +12,9 @@ namespace GridField.Cells
         [SerializeField] private Color _defaultColor;
         [SerializeField] private Color _firstColor;
         [SerializeField] private Color _secondColor;
-        
+
+        public CellConnectionProvider CellConnectionProvider;
+
         private Image _cellImage;
         
         public event Action OnColorChanged;
@@ -59,5 +60,27 @@ namespace GridField.Cells
 
             OnColorChanged?.Invoke();
         }
+    }
+}
+
+public class RotatingCell : MonoBehaviour
+{
+    public CellConnectionProvider CellConnectionProvider;
+
+    //[SerializeField] private RotationTrigger _rotationTrigger;
+    [SerializeField] private GameObject _placeholderVisualization;
+
+    private void Start()
+    {
+    //    _rotationTrigger.OnRotationTriggerActivated += RotateVisualization;
+    }
+
+    private void RotateVisualization()
+    {
+        var currentRotation = _placeholderVisualization.transform.rotation.eulerAngles;
+
+        var newRotation = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z - 90);
+        
+        _placeholderVisualization.transform.rotation = Quaternion.Euler(newRotation);
     }
 }

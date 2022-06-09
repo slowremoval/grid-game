@@ -15,24 +15,8 @@ namespace GridField.Cells
 
         [HideInInspector] public int CurrentAmount;
 
-        //public CellType CellType;
 
         private Image _nodeVisualization;
-        
-        // public CellType NodeType
-        // {
-        //     get => CellType;
-        //     set
-        //     {
-        //         if (value == CellType.empty || value == CellType.simple)
-        //         {
-        //             return;
-        //         }
-        //
-        //         CellType = value;
-        //     }
-        // }
-
 
         public void CheckNeighbours()
         {
@@ -72,6 +56,9 @@ namespace GridField.Cells
         {
             int step = 1;
 
+            bool isCountActive = true;
+            SimpleCell _previousCell = default;
+            
             foreach (var simpleCell in GridData.SimpleCells)
             {
                 if (simpleCell.Coordinates.y != Coordinates.y)
@@ -97,10 +84,22 @@ namespace GridField.Cells
 
                 if (temp == 0)
                 {
-                    break;
+                    isCountActive = false;
                 }
-
-                count += temp;
+                
+                if (isCountActive)
+                {
+                    count += temp;
+                    simpleCell.CellConnectionProvider.TopConnectionSetActive(true);
+                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(true);
+                }
+                else
+                {
+                    simpleCell.CellConnectionProvider.TopConnectionSetActive(false);
+                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(false);
+                }
+                
+                _previousCell = simpleCell;
                 step++;
             }
 
@@ -111,6 +110,9 @@ namespace GridField.Cells
         {
             int step = 1;
 
+            bool isCountActive = true;
+            SimpleCell _previousCell = default;
+            
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
                 SimpleCell simpleCell = GridData.SimpleCells[index];
@@ -139,10 +141,22 @@ namespace GridField.Cells
 
                 if (temp == 0)
                 {
-                    break;
+                    isCountActive = false;
                 }
-
-                count += temp;
+                
+                if (isCountActive)
+                {
+                    count += temp;
+                    simpleCell.CellConnectionProvider.DownConnectionSetActive(true);
+                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(true);
+                }
+                else
+                {
+                    simpleCell.CellConnectionProvider.DownConnectionSetActive(false);
+                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(false);
+                }
+                
+                _previousCell = simpleCell;
                 step++;
             }
 
@@ -154,6 +168,9 @@ namespace GridField.Cells
             int count = 0;
             int step = 1;
 
+            bool isCountActive = true;
+            SimpleCell _previousCell = default;
+            
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
                 var simpleCell = GridData.SimpleCells[index];
@@ -184,11 +201,23 @@ namespace GridField.Cells
 
                 if (temp == 0)
                 {
-                    break;
+                    isCountActive = false;
                 }
-
-                count += temp;
+                
+                if (isCountActive)
+                {
+                    count += temp;
+                    simpleCell.CellConnectionProvider.RightConnectionSetActive(true);
+                    _previousCell?.CellConnectionProvider.LeftConnectionSetActive(true);
+                }
+                else
+                {
+                    simpleCell.CellConnectionProvider.RightConnectionSetActive(false);
+                    _previousCell?.CellConnectionProvider.LeftConnectionSetActive(false);
+                }
+                
                 step++;
+                _previousCell = simpleCell;
             }
 
             return count;
@@ -199,6 +228,10 @@ namespace GridField.Cells
             int count = 0;
             int step = 1;
 
+            bool isCountActive = true;
+
+            SimpleCell _previousCell = default;
+            
             foreach (var simpleCell in GridData.SimpleCells)
             {
                 if (simpleCell.Coordinates.x != Coordinates.x)
@@ -224,11 +257,24 @@ namespace GridField.Cells
 
                 if (temp == 0)
                 {
-                    break;
+                    isCountActive = false;
                 }
 
-                count += temp;
+                if (isCountActive)
+                {
+                    count += temp;
+                    simpleCell.CellConnectionProvider.LeftConnectionSetActive(true);
+                    _previousCell?.CellConnectionProvider.RightConnectionSetActive(true);
+                }
+                else
+                {
+                    simpleCell.CellConnectionProvider.LeftConnectionSetActive(false);
+                    _previousCell?.CellConnectionProvider.RightConnectionSetActive(false);
+                }
+                
                 step++;
+                
+                _previousCell = simpleCell;
             }
 
             return count;
