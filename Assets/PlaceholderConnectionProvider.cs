@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class PlaceholderConnectionProvider : MonoBehaviour
 {
-    //top - 0
-    //down - 1
-    //left - 2
-    //right - 3
-
     [SerializeField] GridCell _cell;
     [SerializeField] private bool _countNeighbousUnactiveSides = true;
 
@@ -21,7 +16,6 @@ public class PlaceholderConnectionProvider : MonoBehaviour
     private void Start()
     {
         ShowGridPlaceholderConnections();
-        //TopConnectionSetActive(true);
     }
 
     private void ShowGridPlaceholderConnections()

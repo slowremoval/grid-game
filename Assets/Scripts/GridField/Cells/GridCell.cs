@@ -60,14 +60,14 @@ namespace GridField.Cells
                 {
                     if (!right.UnactiveSides.Contains(CellSide.down) && !UnactiveSides.Contains(CellSide.top))
                     {
-                        neighbours[0] = true;
+                        neighbours[(int)CellSide.top - 1] = true;
                     }
                 }
                 else
                 {
                     if (!UnactiveSides.Contains(CellSide.top))
                     {
-                        neighbours[0] = true;
+                        neighbours[(int)CellSide.top - 1] = true;
                     }
                 }
             }
@@ -82,14 +82,14 @@ namespace GridField.Cells
                 {
                     if (!right.UnactiveSides.Contains(CellSide.top) && !UnactiveSides.Contains(CellSide.down))
                     {
-                        neighbours[1] = true;
+                        neighbours[(int)CellSide.down - 1] = true;
                     }
                 }
                 else
                 {
                     if (!UnactiveSides.Contains(CellSide.down))
                     {
-                        neighbours[1] = true;
+                        neighbours[(int)CellSide.down - 1] = true;
                     }
                 }
             }
@@ -104,14 +104,14 @@ namespace GridField.Cells
                 {
                     if (!right.UnactiveSides.Contains(CellSide.right) && !UnactiveSides.Contains(CellSide.left))
                     {
-                        neighbours[2] = true;
+                        neighbours[(int)CellSide.left - 1] = true;
                     }
                 }
                 else
                 {
                     if (!UnactiveSides.Contains(CellSide.left))
                     {
-                        neighbours[2] = true;
+                        neighbours[(int)CellSide.left - 1] = true;
                     }
                 }
             }
@@ -127,14 +127,14 @@ namespace GridField.Cells
                 {
                     if (!right.UnactiveSides.Contains(CellSide.left) && !UnactiveSides.Contains(CellSide.right))
                     {
-                        neighbours[3] = true;
+                        neighbours[(int)CellSide.right - 1] = true;
                     }
                 }
                 else
                 {
                     if (!UnactiveSides.Contains(CellSide.right))
                     {
-                        neighbours[3] = true;
+                        neighbours[(int)CellSide.right - 1] = true;
                     }
                 }
             }

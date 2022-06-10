@@ -85,7 +85,7 @@
       <workItem from="1654595099873" duration="9541000" />
       <workItem from="1654629219710" duration="493000" />
       <workItem from="1654674280734" duration="16614000" />
-      <workItem from="1654852810276" duration="9911000" />
+      <workItem from="1654852810276" duration="11616000" />
     </task>
     <servers />
   </component>
@@ -103,39 +103,39 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
-          <line>75</line>
+          <line>76</line>
           <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="75" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
-              <option value="1792" />
+              <option value="1826" />
             </startOffsets>
             <endOffsets>
-              <option value="1814" />
+              <option value="1848" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
-          <line>80</line>
+          <line>81</line>
           <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="80" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
-              <option value="1973" />
+              <option value="1990" />
             </startOffsets>
             <endOffsets>
-              <option value="1995" />
+              <option value="2012" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
-          <line>91</line>
+          <line>92</line>
           <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="91" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
-              <option value="2286" />
+              <option value="2303" />
             </startOffsets>
             <endOffsets>
-              <option value="2308" />
+              <option value="2325" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="22" />

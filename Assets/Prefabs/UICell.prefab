@@ -124,9 +124,9 @@ MonoBehaviour:
   _countNeighbousUnactiveSides: 1
   _placeholderConnections:
   - {fileID: 3973594763128932076}
+  - {fileID: 3525247001985106000}
   - {fileID: 4502285182545927104}
   - {fileID: 7197328035671739266}
-  - {fileID: 3525247001985106000}
 --- !u!114 &8395895951426084612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,9 +141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cellItemConnections:
   - {fileID: 4561381376934644457}
+  - {fileID: 4906028022859793595}
   - {fileID: 2231555165257070604}
   - {fileID: 1422071162655075381}
-  - {fileID: 4906028022859793595}
 --- !u!1 &1092589541965593856
 GameObject:
   m_ObjectHideFlags: 0

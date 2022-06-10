@@ -70,13 +70,13 @@ namespace GridField.Cells
                 {
                     continue;
                 }
-                
+
                 if (simpleCell.UnactiveSides.Contains(CellSide.down))
                 {
                     Debug.Log($"top is false!");
                     isCountActive = false;
                 }
-                
+
                 if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.top))
                 {
                     isCountActive = false;
@@ -96,8 +96,8 @@ namespace GridField.Cells
                 if (isCountActive)
                 {
                     count += temp;
-                    simpleCell.CellConnectionProvider.DownConnectionSetActive(true);
-                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(true);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.down, CellSide.top, true);
                 }
                 else
                 {
@@ -105,9 +105,10 @@ namespace GridField.Cells
                     {
                         break;
                     }
-                    simpleCell.CellConnectionProvider.DownConnectionSetActive(false);
-                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(false);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.down, CellSide.top, false);
                 }
+
                 _previousCell = simpleCell;
                 step++;
             }
@@ -125,8 +126,7 @@ namespace GridField.Cells
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
                 SimpleCell simpleCell = GridData.SimpleCells[index];
-
-
+                
                 if (simpleCell.Coordinates.y != Coordinates.y)
                 {
                     continue;
@@ -141,7 +141,7 @@ namespace GridField.Cells
                 {
                     isCountActive = false;
                 }
-                
+
                 if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.down))
                 {
                     isCountActive = false;
@@ -158,13 +158,12 @@ namespace GridField.Cells
                     isCountActive = false;
                 }
 
-                
+
                 if (isCountActive)
                 {
                     count += temp;
-                    
-                    simpleCell.CellConnectionProvider.TopConnectionSetActive(true);
-                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(true);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.top, CellSide.down, true);
                 }
                 else
                 {
@@ -172,9 +171,8 @@ namespace GridField.Cells
                     {
                         break;
                     }
-                    
-                    simpleCell.CellConnectionProvider.TopConnectionSetActive(false);
-                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(false);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.top, CellSide.down, false);
                 }
 
                 _previousCell = simpleCell;
@@ -184,13 +182,20 @@ namespace GridField.Cells
             return count;
         }
 
+        private static void ConnectionBetweenCellsSetActive(SimpleCell simpleCell, SimpleCell _previousCell,
+            CellSide first, CellSide second, bool setActive)
+        {
+            simpleCell.CellConnectionProvider.ConnectionSetActive(setActive, first);
+            _previousCell?.CellConnectionProvider.ConnectionSetActive(setActive, second);
+        }
+
         private int CheckLeftSide()
         {
             int count = 0;
             int step = 1;
 
             bool isCountActive = true;
-            
+
             SimpleCell _previousCell = default;
 
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
@@ -211,7 +216,7 @@ namespace GridField.Cells
                 {
                     isCountActive = false;
                 }
-                
+
                 if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.left))
                 {
                     isCountActive = false;
@@ -231,16 +236,17 @@ namespace GridField.Cells
                 if (isCountActive)
                 {
                     count += temp;
-                    simpleCell.CellConnectionProvider.RightConnectionSetActive(true);
-                    _previousCell?.CellConnectionProvider.LeftConnectionSetActive(true);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.right, CellSide.left, true);
                 }
                 else
-                {if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
+                {
+                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
                     {
                         break;
                     }
-                    simpleCell.CellConnectionProvider.RightConnectionSetActive(false);
-                    _previousCell?.CellConnectionProvider.LeftConnectionSetActive(false);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.right, CellSide.left, false);
                 }
 
                 step++;
@@ -275,7 +281,7 @@ namespace GridField.Cells
                 {
                     isCountActive = false;
                 }
-                
+
                 if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.right))
                 {
                     isCountActive = false;
@@ -296,16 +302,16 @@ namespace GridField.Cells
                 if (isCountActive)
                 {
                     count += temp;
-                    simpleCell.CellConnectionProvider.LeftConnectionSetActive(true);
-                    _previousCell?.CellConnectionProvider.RightConnectionSetActive(true);
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.left, CellSide.right, true);
                 }
                 else
-                {if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
+                {
+                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
                     {
                         break;
                     }
-                    simpleCell.CellConnectionProvider.LeftConnectionSetActive(false);
-                    _previousCell?.CellConnectionProvider.RightConnectionSetActive(false);
+
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.left, CellSide.right, false);
                 }
 
                 step++;
