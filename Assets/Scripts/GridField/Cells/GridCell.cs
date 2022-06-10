@@ -45,18 +45,30 @@ namespace GridField.Cells
             return vector4ToArray;
         }
 
-        public bool[] HasNeighbours()
+        public bool[] HasNeighbours(bool countNeighbourUnactive = true)
         {
             bool[] neighbours = new bool[4];
-
+            RotatingCell rotating = default;
+            
             if ((int)Coordinates.x < GridData._cells.GetLength(0) - 1 &&
                 !GridData._cells[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<EmptyCell>(out _))
             {
                 GridData._cells[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<GridCell>(out var right);
-
-                if (!right.UnactiveSides.Contains(CellSide.down) && !UnactiveSides.Contains(CellSide.top))
+                GridData._cells[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<RotatingCell>(out rotating);
+                
+                if (rotating == default)
                 {
-                    neighbours[0] = true;
+                    if (!right.UnactiveSides.Contains(CellSide.down) && !UnactiveSides.Contains(CellSide.top))
+                    {
+                        neighbours[0] = true;
+                    }
+                }
+                else
+                {
+                    if (!UnactiveSides.Contains(CellSide.top))
+                    {
+                        neighbours[0] = true;
+                    }
                 }
             }
 
@@ -64,10 +76,21 @@ namespace GridField.Cells
                     .TryGetComponent<EmptyCell>(out _))
             {
                 GridData._cells[(int)Coordinates.x - 1, (int)Coordinates.y].TryGetComponent<GridCell>(out var right);
+                GridData._cells[(int)Coordinates.x - 1, (int)Coordinates.y].TryGetComponent<RotatingCell>(out rotating);
 
-                if (!right.UnactiveSides.Contains(CellSide.top) && !UnactiveSides.Contains(CellSide.down))
+                if (rotating == default)
                 {
-                    neighbours[1] = true;
+                    if (!right.UnactiveSides.Contains(CellSide.top) && !UnactiveSides.Contains(CellSide.down))
+                    {
+                        neighbours[1] = true;
+                    }
+                }
+                else
+                {
+                    if (!UnactiveSides.Contains(CellSide.down))
+                    {
+                        neighbours[1] = true;
+                    }
                 }
             }
 
@@ -75,10 +98,21 @@ namespace GridField.Cells
                     .TryGetComponent<EmptyCell>(out _))
             {
                 GridData._cells[(int)Coordinates.x, (int)Coordinates.y - 1].TryGetComponent<GridCell>(out var right);
+                GridData._cells[(int)Coordinates.x, (int)Coordinates.y - 1].TryGetComponent<RotatingCell>(out rotating);
 
-                if (!right.UnactiveSides.Contains(CellSide.right) && !UnactiveSides.Contains(CellSide.left))
+                if (rotating == default)
                 {
-                    neighbours[2] = true;
+                    if (!right.UnactiveSides.Contains(CellSide.right) && !UnactiveSides.Contains(CellSide.left))
+                    {
+                        neighbours[2] = true;
+                    }
+                }
+                else
+                {
+                    if (!UnactiveSides.Contains(CellSide.left))
+                    {
+                        neighbours[2] = true;
+                    }
                 }
             }
 
@@ -87,10 +121,21 @@ namespace GridField.Cells
                     .TryGetComponent<EmptyCell>(out _))
             {
                 GridData._cells[(int)Coordinates.x, (int)Coordinates.y + 1].TryGetComponent<GridCell>(out var right);
+                GridData._cells[(int)Coordinates.x, (int)Coordinates.y + 1].TryGetComponent<RotatingCell>(out rotating);
 
-                if (!right.UnactiveSides.Contains(CellSide.left) && !UnactiveSides.Contains(CellSide.right))
+                if (rotating == default)
                 {
-                    neighbours[3] = true;
+                    if (!right.UnactiveSides.Contains(CellSide.left) && !UnactiveSides.Contains(CellSide.right))
+                    {
+                        neighbours[3] = true;
+                    }
+                }
+                else
+                {
+                    if (!UnactiveSides.Contains(CellSide.right))
+                    {
+                        neighbours[3] = true;
+                    }
                 }
             }
 

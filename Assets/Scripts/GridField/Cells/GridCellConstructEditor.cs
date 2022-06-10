@@ -30,7 +30,7 @@ namespace GridField.Cells
             GUILayout.BeginHorizontal();
 
             GUI.backgroundColor = Color.green;
-            if (GUILayout.Button("Set Simple Sell", GUILayout.Height(33)))
+            if (GUILayout.Button("Set Simple Cell", GUILayout.Height(33)))
             {
                 builder.SetSimpleCell();
             }
@@ -39,6 +39,16 @@ namespace GridField.Cells
             if (GUILayout.Button("Set Empty Cell", GUILayout.Height(33)))
             {
                 builder.SetEmptyCell();
+            }
+
+            GUILayout.EndHorizontal();
+            
+            GUILayout.BeginHorizontal();
+
+            GUI.backgroundColor = Color.magenta;
+            if (GUILayout.Button("Set Rotating Cell", GUILayout.Height(33)))
+            {
+                builder.SetRotatingCell();
             }
 
             GUILayout.EndHorizontal();

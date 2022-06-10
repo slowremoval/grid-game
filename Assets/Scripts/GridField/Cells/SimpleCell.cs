@@ -7,29 +7,34 @@ namespace GridField.Cells
 {
     public class SimpleCell : GridCell
     {
-        [SerializeField] private GameObject _visualization;
+        [SerializeField] protected GameObject _visualization;
 
-        [SerializeField] private Color _defaultColor;
-        [SerializeField] private Color _firstColor;
-        [SerializeField] private Color _secondColor;
+        [SerializeField] protected Color _defaultColor;
+        [SerializeField] protected Color _firstColor;
+        [SerializeField] protected Color _secondColor;
 
         public CellConnectionProvider CellConnectionProvider;
 
-        private Image _cellImage;
+        protected Image _cellImage;
         
         public event Action OnColorChanged;
 
         private void Start()
         {
+            InitializeCellImage();
+        }
+
+        protected void InitializeCellImage()
+        {
             _cellImage = _visualization.GetComponent<Image>();
         }
-        
+
         public override void OnPointerDown(PointerEventData eventData)
         {
             SetColorByClick();
         }
 
-        private void SetColorByClick()
+        protected void SetColorByClick()
         {
             if (Input.GetMouseButton(0))
             {
@@ -58,29 +63,9 @@ namespace GridField.Cells
                 }
             }
 
-            OnColorChanged?.Invoke();
+            SendVisualizationChanged();
         }
-    }
-}
 
-public class RotatingCell : MonoBehaviour
-{
-    public CellConnectionProvider CellConnectionProvider;
-
-    //[SerializeField] private RotationTrigger _rotationTrigger;
-    [SerializeField] private GameObject _placeholderVisualization;
-
-    private void Start()
-    {
-    //    _rotationTrigger.OnRotationTriggerActivated += RotateVisualization;
-    }
-
-    private void RotateVisualization()
-    {
-        var currentRotation = _placeholderVisualization.transform.rotation.eulerAngles;
-
-        var newRotation = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z - 90);
-        
-        _placeholderVisualization.transform.rotation = Quaternion.Euler(newRotation);
+        protected void SendVisualizationChanged() => OnColorChanged?.Invoke();
     }
 }

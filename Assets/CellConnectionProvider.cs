@@ -8,9 +8,9 @@ public class CellConnectionProvider : MonoBehaviour
     private List<GameObject> _cellItemConnections;
 
 
-    public void TopConnectionSetActive(bool setActive) => _cellItemConnections[1].SetActive(setActive);
+    public void TopConnectionSetActive(bool setActive) => _cellItemConnections[0].SetActive(setActive);
 
-    public void DownConnectionSetActive(bool setActive) => _cellItemConnections[0].SetActive(setActive);
+    public void DownConnectionSetActive(bool setActive) => _cellItemConnections[1].SetActive(setActive);
 
     public void LeftConnectionSetActive(bool setActive) => _cellItemConnections[2].SetActive(setActive);
 

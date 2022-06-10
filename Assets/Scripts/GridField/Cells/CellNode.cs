@@ -21,7 +21,7 @@ namespace GridField.Cells
         public void CheckNeighbours()
         {
             int neighboursCount = 0;
-            
+
             neighboursCount += CheckHorizontal();
             neighboursCount += CheckVertical();
 
@@ -48,7 +48,7 @@ namespace GridField.Cells
             int leftNeighbours = CheckLeftSide();
 
             int count = leftNeighbours + rightNeighbours;
-            
+
             return count;
         }
 
@@ -58,7 +58,7 @@ namespace GridField.Cells
 
             bool isCountActive = true;
             SimpleCell _previousCell = default;
-            
+
             foreach (var simpleCell in GridData.SimpleCells)
             {
                 if (simpleCell.Coordinates.y != Coordinates.y)
@@ -70,10 +70,16 @@ namespace GridField.Cells
                 {
                     continue;
                 }
-
+                
                 if (simpleCell.UnactiveSides.Contains(CellSide.down))
                 {
-                    break;
+                    Debug.Log($"top is false!");
+                    isCountActive = false;
+                }
+                
+                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.top))
+                {
+                    isCountActive = false;
                 }
 
                 int temp = CheckAxisCell(
@@ -86,19 +92,22 @@ namespace GridField.Cells
                 {
                     isCountActive = false;
                 }
-                
+
                 if (isCountActive)
                 {
                     count += temp;
-                    simpleCell.CellConnectionProvider.TopConnectionSetActive(true);
-                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(true);
+                    simpleCell.CellConnectionProvider.DownConnectionSetActive(true);
+                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(true);
                 }
                 else
                 {
-                    simpleCell.CellConnectionProvider.TopConnectionSetActive(false);
-                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(false);
+                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
+                    {
+                        break;
+                    }
+                    simpleCell.CellConnectionProvider.DownConnectionSetActive(false);
+                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(false);
                 }
-                
                 _previousCell = simpleCell;
                 step++;
             }
@@ -112,7 +121,7 @@ namespace GridField.Cells
 
             bool isCountActive = true;
             SimpleCell _previousCell = default;
-            
+
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
                 SimpleCell simpleCell = GridData.SimpleCells[index];
@@ -130,7 +139,12 @@ namespace GridField.Cells
 
                 if (simpleCell.UnactiveSides.Contains(CellSide.top))
                 {
-                    break;
+                    isCountActive = false;
+                }
+                
+                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.down))
+                {
+                    isCountActive = false;
                 }
 
                 int temp = CheckAxisCell(
@@ -143,19 +157,26 @@ namespace GridField.Cells
                 {
                     isCountActive = false;
                 }
+
                 
                 if (isCountActive)
                 {
                     count += temp;
-                    simpleCell.CellConnectionProvider.DownConnectionSetActive(true);
-                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(true);
+                    
+                    simpleCell.CellConnectionProvider.TopConnectionSetActive(true);
+                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(true);
                 }
                 else
                 {
-                    simpleCell.CellConnectionProvider.DownConnectionSetActive(false);
-                    _previousCell?.CellConnectionProvider.TopConnectionSetActive(false);
+                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
+                    {
+                        break;
+                    }
+                    
+                    simpleCell.CellConnectionProvider.TopConnectionSetActive(false);
+                    _previousCell?.CellConnectionProvider.DownConnectionSetActive(false);
                 }
-                
+
                 _previousCell = simpleCell;
                 step++;
             }
@@ -169,8 +190,9 @@ namespace GridField.Cells
             int step = 1;
 
             bool isCountActive = true;
-            SimpleCell _previousCell = default;
             
+            SimpleCell _previousCell = default;
+
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
                 var simpleCell = GridData.SimpleCells[index];
@@ -187,11 +209,13 @@ namespace GridField.Cells
 
                 if (simpleCell.UnactiveSides.Contains(CellSide.right))
                 {
-                    break;
+                    isCountActive = false;
                 }
-
-                Debug.Log(
-                    $"step : {step}, cellCoordinate  : {simpleCell.Coordinates.y}, nodeCoordinate : {(int)Coordinates.y}");
+                
+                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.left))
+                {
+                    isCountActive = false;
+                }
 
                 int temp = CheckAxisCell(
                     simpleCell.CellType,
@@ -203,7 +227,7 @@ namespace GridField.Cells
                 {
                     isCountActive = false;
                 }
-                
+
                 if (isCountActive)
                 {
                     count += temp;
@@ -211,11 +235,14 @@ namespace GridField.Cells
                     _previousCell?.CellConnectionProvider.LeftConnectionSetActive(true);
                 }
                 else
-                {
+                {if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
+                    {
+                        break;
+                    }
                     simpleCell.CellConnectionProvider.RightConnectionSetActive(false);
                     _previousCell?.CellConnectionProvider.LeftConnectionSetActive(false);
                 }
-                
+
                 step++;
                 _previousCell = simpleCell;
             }
@@ -231,7 +258,7 @@ namespace GridField.Cells
             bool isCountActive = true;
 
             SimpleCell _previousCell = default;
-            
+
             foreach (var simpleCell in GridData.SimpleCells)
             {
                 if (simpleCell.Coordinates.x != Coordinates.x)
@@ -246,9 +273,15 @@ namespace GridField.Cells
 
                 if (simpleCell.UnactiveSides.Contains(CellSide.left))
                 {
-                    break;
+                    isCountActive = false;
                 }
                 
+                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.right))
+                {
+                    isCountActive = false;
+                }
+
+
                 int temp = CheckAxisCell(
                     simpleCell.CellType,
                     (int)simpleCell.Coordinates.y,
@@ -267,20 +300,23 @@ namespace GridField.Cells
                     _previousCell?.CellConnectionProvider.RightConnectionSetActive(true);
                 }
                 else
-                {
+                {if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
+                    {
+                        break;
+                    }
                     simpleCell.CellConnectionProvider.LeftConnectionSetActive(false);
                     _previousCell?.CellConnectionProvider.RightConnectionSetActive(false);
                 }
-                
+
                 step++;
-                
+
                 _previousCell = simpleCell;
             }
 
             return count;
         }
-        
-        
+
+
         private int CheckAxisCell(CellType cellType, int cellCoordinate, int nodeCoordinate, int step = 1)
         {
             if (cellType != CellType) return 0;

@@ -10,7 +10,8 @@ public class PlaceholderConnectionProvider : MonoBehaviour
     //left - 2
     //right - 3
 
-    [SerializeField] SimpleCell _simpleCell;
+    [SerializeField] GridCell _cell;
+    [SerializeField] private bool _countNeighbousUnactiveSides = true;
 
     private float _connectionScaleSpeed;
 
@@ -25,7 +26,7 @@ public class PlaceholderConnectionProvider : MonoBehaviour
 
     private void ShowGridPlaceholderConnections()
     {
-        bool[] neighbours = _simpleCell.HasNeighbours();
+        bool[] neighbours = _cell.HasNeighbours(_countNeighbousUnactiveSides);
 
         for (var index = 0; index < _placeholderConnections.Count; index++)
         {

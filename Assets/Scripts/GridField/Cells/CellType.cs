@@ -5,6 +5,8 @@ namespace GridField.Cells
         simple,
         dark,
         light,
-        empty
+        empty,
+        rotating, 
+        solid
     }
 }

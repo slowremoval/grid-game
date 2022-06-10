@@ -82,6 +82,11 @@ namespace GridField.Cells
                     _color = Color.white;
                     _color.a = 0.9f;
                     break;
+                
+                case CellType.rotating:
+                    _color = Color.green;
+                    _color.a = 0.9f;
+                    break;
             }
         }
 
@@ -113,6 +118,12 @@ namespace GridField.Cells
         public void SetEmptyCell()
         {
             ThisCellType = CellType.empty;
+            requiredAmount = 0;
+            UpdateCellVisualization();
+        }
+        public void SetRotatingCell()
+        {
+            ThisCellType = CellType.rotating;
             requiredAmount = 0;
             UpdateCellVisualization();
         }

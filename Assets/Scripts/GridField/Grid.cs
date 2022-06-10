@@ -8,6 +8,7 @@ namespace GridField
     {
         public List<CellNode> Nodes;
         public List<SimpleCell> SimpleCells;
+        public List<RotatingCell> RotatingCells;
         
         public GridCell[,] _cells;
 

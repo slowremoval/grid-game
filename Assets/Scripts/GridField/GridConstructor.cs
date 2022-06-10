@@ -16,6 +16,7 @@ namespace GridField
         [SerializeField] private GameObject _cellConstructPrefab;
         [SerializeField] private GameObject _cellNodePrefab;
         [SerializeField] private GameObject _cellEmptyPrefab;
+        [SerializeField] private GameObject _cellRotatingPrefab;
         [SerializeField]private float _spacing = 20;
 
         [Space] [SerializeField] private string _levelName;
@@ -220,7 +221,7 @@ namespace GridField
                     switch (lvl.CellTypes[count])
                     {
                         case CellType.simple:
-                            ConfigureSimpleCell(lvl, i, j, count);
+                            ConfigureSimpleCell<SimpleCell>(lvl, i, j, count, _cellPrefab, SimpleCells);
                             break;
                         case CellType.dark:
                             ConfigureNode(lvl, i, j, count, CellType.dark);
@@ -230,6 +231,9 @@ namespace GridField
                             break;
                         case CellType.empty:
                             InstantiateCell(_cellEmptyPrefab, i, j);
+                            break;
+                        case CellType.rotating:
+                            ConfigureSimpleCell<SimpleCell>(lvl, i, j, count, _cellRotatingPrefab, SimpleCells);
                             break;
                     }
                     
@@ -244,15 +248,16 @@ namespace GridField
                 DeactivateEmptyCells());
         }
 
-        private void ConfigureSimpleCell(SaveData lvl, int i, int j, int count)
+
+        private void ConfigureSimpleCell<T>(SaveData lvl, int i, int j, int count, GameObject cellPrefab, List<T> listToAdd) where T : GridCell
         {
-            GameObject currentCell = InstantiateCell(_cellPrefab, i, j);
-            SimpleCell simpleCell = currentCell.GetComponent<SimpleCell>();
+            GameObject currentCell = InstantiateCell(cellPrefab, i, j);
+            T cell = currentCell.GetComponent<T>();
             
-            simpleCell.SetSidesProperties(lvl.UnactiveSidesVector[count], simpleCell);
-            simpleCell.GridData = this;
+            cell.SetSidesProperties(lvl.UnactiveSidesVector[count], cell);
+            cell.GridData = this;
             
-            SimpleCells.Add(simpleCell);
+            listToAdd.Add(cell);
         }
         private void ConfigureNode(SaveData lvl, int i, int j, int count, CellType type)
         {
