@@ -57,7 +57,7 @@ namespace GridField.Cells
             int step = 1;
 
             bool isCountActive = true;
-            SimpleCell _previousCell = default;
+            GridCell _previousCell = this;
 
             foreach (var simpleCell in GridData.SimpleCells)
             {
@@ -121,7 +121,7 @@ namespace GridField.Cells
             int step = 1;
 
             bool isCountActive = true;
-            SimpleCell _previousCell = default;
+            GridCell _previousCell = this;
 
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
@@ -182,11 +182,11 @@ namespace GridField.Cells
             return count;
         }
 
-        private static void ConnectionBetweenCellsSetActive(SimpleCell simpleCell, SimpleCell _previousCell,
+        private void ConnectionBetweenCellsSetActive(GridCell simpleCell, GridCell _previousCell,
             CellSide first, CellSide second, bool setActive)
         {
-            simpleCell.CellConnectionProvider.ConnectionSetActive(setActive, first);
-            _previousCell?.CellConnectionProvider.ConnectionSetActive(setActive, second);
+            simpleCell.CellConnectionProvider.ConnectionSetActive(setActive, first, CellType);
+            _previousCell?.CellConnectionProvider.ConnectionSetActive(setActive, second, CellType);
         }
 
         private int CheckLeftSide()
@@ -196,7 +196,7 @@ namespace GridField.Cells
 
             bool isCountActive = true;
 
-            SimpleCell _previousCell = default;
+            GridCell _previousCell = this;
 
             for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
             {
@@ -263,7 +263,7 @@ namespace GridField.Cells
 
             bool isCountActive = true;
 
-            SimpleCell _previousCell = default;
+            GridCell _previousCell = this;
 
             foreach (var simpleCell in GridData.SimpleCells)
             {

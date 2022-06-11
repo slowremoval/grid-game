@@ -9,6 +9,8 @@ namespace GridField.Cells
         public CellSide[] UnactiveSides;
         public CellType CellType { get; set; }
 
+        public CellConnectionProvider CellConnectionProvider;
+        
         [HideInInspector] public Grid GridData;
 
         private void Start()
@@ -45,7 +47,7 @@ namespace GridField.Cells
             return vector4ToArray;
         }
 
-        public bool[] HasNeighbours(bool countNeighbourUnactive = true)
+        public bool[] HasNeighbours()
         {
             bool[] neighbours = new bool[4];
             RotatingCell rotating = default;

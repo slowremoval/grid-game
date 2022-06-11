@@ -13,7 +13,6 @@ namespace GridField.Cells
         [SerializeField] protected Color _firstColor;
         [SerializeField] protected Color _secondColor;
 
-        public CellConnectionProvider CellConnectionProvider;
 
         protected Image _cellImage;
         

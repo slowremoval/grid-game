@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlaceholderConnectionProvider : MonoBehaviour
 {
     [SerializeField] GridCell _cell;
-    [SerializeField] private bool _countNeighbousUnactiveSides = true;
 
     private float _connectionScaleSpeed;
 
@@ -20,7 +19,7 @@ public class PlaceholderConnectionProvider : MonoBehaviour
 
     private void ShowGridPlaceholderConnections()
     {
-        bool[] neighbours = _cell.HasNeighbours(_countNeighbousUnactiveSides);
+        bool[] neighbours = _cell.HasNeighbours();
 
         for (var index = 0; index < _placeholderConnections.Count; index++)
         {
@@ -47,4 +46,5 @@ public class PlaceholderConnectionProvider : MonoBehaviour
                     Time.deltaTime * _connectionScaleSpeed);
         }
     }
+
 }
