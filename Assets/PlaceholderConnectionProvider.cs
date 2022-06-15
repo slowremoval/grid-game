@@ -31,6 +31,10 @@ public class PlaceholderConnectionProvider : MonoBehaviour
                 connectionSide.SetActive(true);
                 StartCoroutine(ActivateConnectionRoutine(connectionSide));
             }
+            else
+            {
+                _cell.UnactiveSides[index] = (CellSide)(index + 1);
+            }
         }
     }
 

@@ -13,13 +13,22 @@ namespace GridField.Cells
 
         public int requiredAmount { get; private set; }
 
-        public CellType ThisCellType;
+        [HideInInspector] public CellType ThisCellType;
 
         private Color _color;
 
         private Image _currentCellVisualization;
 
-        
+        private bool SideSetActive(int sideNumber)
+        {
+            UnactiveSides[sideNumber - 1] = UnactiveSides[sideNumber - 1] == 0 ? (CellSide)sideNumber : (CellSide)0;
+            return UnactiveSides[sideNumber - 1] == 0;
+        }
+
+        public bool ChangeLeftSideState() => SideSetActive((int)CellSide.left);
+        public bool ChangeRightSideState() => SideSetActive((int)CellSide.right);
+        public bool ChangeUpperSideState() => SideSetActive((int)CellSide.top);
+        public bool ChangeUnderSideState() => SideSetActive((int)CellSide.down);
 
         public void SetRequiredAmount(int amount)
         {
@@ -82,10 +91,22 @@ namespace GridField.Cells
                     _color = Color.white;
                     _color.a = 0.9f;
                     break;
-                
+
                 case CellType.rotating:
                     _color = Color.green;
                     _color.a = 0.9f;
+                    break;
+                case CellType.stableDark:
+                    _color = Color.gray;
+                    _color.a = 0.7f;
+                    break;
+                case CellType.stableLight:
+                    _color = Color.yellow;
+                    _color.a = 0.42f;
+                    break;
+                case CellType.universal:
+                    _color = Color.cyan;
+                    _color.a = 0.8f;
                     break;
             }
         }
@@ -121,9 +142,31 @@ namespace GridField.Cells
             requiredAmount = 0;
             UpdateCellVisualization();
         }
+
         public void SetRotatingCell()
         {
             ThisCellType = CellType.rotating;
+            requiredAmount = 0;
+            UpdateCellVisualization();
+        }
+
+        public void SetUniversalCell()
+        {
+            ThisCellType = CellType.universal;
+            requiredAmount = 0;
+            UpdateCellVisualization();
+        }
+
+        public void SetStableDarkCell()
+        {
+            ThisCellType = CellType.stableDark;
+            requiredAmount = 0;
+            UpdateCellVisualization();
+        }
+
+        public void SetStableLightCell()
+        {
+            ThisCellType = CellType.stableLight;
             requiredAmount = 0;
             UpdateCellVisualization();
         }

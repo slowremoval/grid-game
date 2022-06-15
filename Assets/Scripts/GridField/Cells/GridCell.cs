@@ -5,12 +5,12 @@ namespace GridField.Cells
 {
     public abstract class GridCell : UIElementSelector
     {
-        public Vector2 Coordinates;
-        public CellSide[] UnactiveSides;
+        [HideInInspector] public Vector2 Coordinates;
+        [HideInInspector] public CellSide[] UnactiveSides;
         public CellType CellType { get; set; }
 
         public CellConnectionProvider CellConnectionProvider;
-        
+
         [HideInInspector] public Grid GridData;
 
         private void Start()
@@ -51,13 +51,13 @@ namespace GridField.Cells
         {
             bool[] neighbours = new bool[4];
             RotatingCell rotating = default;
-            
-            if ((int)Coordinates.x < GridData._cells.GetLength(0) - 1 &&
-                !GridData._cells[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<EmptyCell>(out _))
+
+            if ((int)Coordinates.x < GridData._allGridElements.GetLength(0) - 1 &&
+                !GridData._allGridElements[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<EmptyCell>(out _))
             {
-                GridData._cells[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<GridCell>(out var right);
-                GridData._cells[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<RotatingCell>(out rotating);
-                
+                GridData._allGridElements[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<GridCell>(out var right);
+                GridData._allGridElements[(int)Coordinates.x + 1, (int)Coordinates.y].TryGetComponent<RotatingCell>(out rotating);
+
                 if (rotating == default)
                 {
                     if (!right.UnactiveSides.Contains(CellSide.down) && !UnactiveSides.Contains(CellSide.top))
@@ -74,11 +74,11 @@ namespace GridField.Cells
                 }
             }
 
-            if ((int)Coordinates.x != 0 && !GridData._cells[(int)Coordinates.x - 1, (int)Coordinates.y]
+            if ((int)Coordinates.x != 0 && !GridData._allGridElements[(int)Coordinates.x - 1, (int)Coordinates.y]
                     .TryGetComponent<EmptyCell>(out _))
             {
-                GridData._cells[(int)Coordinates.x - 1, (int)Coordinates.y].TryGetComponent<GridCell>(out var right);
-                GridData._cells[(int)Coordinates.x - 1, (int)Coordinates.y].TryGetComponent<RotatingCell>(out rotating);
+                GridData._allGridElements[(int)Coordinates.x - 1, (int)Coordinates.y].TryGetComponent<GridCell>(out var right);
+                GridData._allGridElements[(int)Coordinates.x - 1, (int)Coordinates.y].TryGetComponent<RotatingCell>(out rotating);
 
                 if (rotating == default)
                 {
@@ -96,11 +96,11 @@ namespace GridField.Cells
                 }
             }
 
-            if ((int)Coordinates.y != 0 && !GridData._cells[(int)Coordinates.x, (int)Coordinates.y - 1]
+            if ((int)Coordinates.y != 0 && !GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y - 1]
                     .TryGetComponent<EmptyCell>(out _))
             {
-                GridData._cells[(int)Coordinates.x, (int)Coordinates.y - 1].TryGetComponent<GridCell>(out var right);
-                GridData._cells[(int)Coordinates.x, (int)Coordinates.y - 1].TryGetComponent<RotatingCell>(out rotating);
+                GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y - 1].TryGetComponent<GridCell>(out var right);
+                GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y - 1].TryGetComponent<RotatingCell>(out rotating);
 
                 if (rotating == default)
                 {
@@ -118,12 +118,12 @@ namespace GridField.Cells
                 }
             }
 
-            if ((int)Coordinates.y < GridData._cells.GetLength(1) - 1 && !GridData
-                    ._cells[(int)Coordinates.x, (int)Coordinates.y + 1]
+            if ((int)Coordinates.y < GridData._allGridElements.GetLength(1) - 1 && !GridData
+                    ._allGridElements[(int)Coordinates.x, (int)Coordinates.y + 1]
                     .TryGetComponent<EmptyCell>(out _))
             {
-                GridData._cells[(int)Coordinates.x, (int)Coordinates.y + 1].TryGetComponent<GridCell>(out var right);
-                GridData._cells[(int)Coordinates.x, (int)Coordinates.y + 1].TryGetComponent<RotatingCell>(out rotating);
+                GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y + 1].TryGetComponent<GridCell>(out var right);
+                GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y + 1].TryGetComponent<RotatingCell>(out rotating);
 
                 if (rotating == default)
                 {

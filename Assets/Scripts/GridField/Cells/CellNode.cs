@@ -1,22 +1,17 @@
+using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace GridField.Cells
 {
-    public class CellNode : GridCell
+    public class CellNode : StableCell
     {
         [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
-
-        [SerializeField] private GameObject _visualization;
 
         [HideInInspector] public int requiredAmount;
 
         [HideInInspector] public int CurrentAmount;
-
-
-        private Image _nodeVisualization;
 
         public void CheckNeighbours()
         {
@@ -29,6 +24,7 @@ namespace GridField.Cells
 
             ShowNodeRequirements(CurrentAmount);
         }
+
 
         private int CheckVertical()
         {
@@ -59,7 +55,7 @@ namespace GridField.Cells
             bool isCountActive = true;
             GridCell _previousCell = this;
 
-            foreach (var simpleCell in GridData.SimpleCells)
+            foreach (var simpleCell in GridData.Cells)
             {
                 if (simpleCell.Coordinates.y != Coordinates.y)
                 {
@@ -123,10 +119,10 @@ namespace GridField.Cells
             bool isCountActive = true;
             GridCell _previousCell = this;
 
-            for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
+            for (int index = GridData.Cells.Count - 1; index >= 0; index--)
             {
-                SimpleCell simpleCell = GridData.SimpleCells[index];
-                
+                GridCell simpleCell = GridData.Cells[index];
+
                 if (simpleCell.Coordinates.y != Coordinates.y)
                 {
                     continue;
@@ -198,9 +194,9 @@ namespace GridField.Cells
 
             GridCell _previousCell = this;
 
-            for (int index = GridData.SimpleCells.Count - 1; index >= 0; index--)
+            for (int index = GridData.Cells.Count - 1; index >= 0; index--)
             {
-                var simpleCell = GridData.SimpleCells[index];
+                var simpleCell = GridData.Cells[index];
 
                 if (simpleCell.Coordinates.x != Coordinates.x)
                 {
@@ -265,7 +261,7 @@ namespace GridField.Cells
 
             GridCell _previousCell = this;
 
-            foreach (var simpleCell in GridData.SimpleCells)
+            foreach (var simpleCell in GridData.Cells)
             {
                 if (simpleCell.Coordinates.x != Coordinates.x)
                 {
@@ -325,7 +321,7 @@ namespace GridField.Cells
 
         private int CheckAxisCell(CellType cellType, int cellCoordinate, int nodeCoordinate, int step = 1)
         {
-            if (cellType != CellType) return 0;
+            if (cellType != CellType && cellType != CellType.universal) return 0;
 
             if (cellCoordinate == nodeCoordinate) return 0;
 
@@ -347,15 +343,14 @@ namespace GridField.Cells
                 return;
             }
 
-            _nodeVisualization = _visualization.GetComponent<Image>();
+            StartCoroutine(CheckNeighboursRoutine());
             UpdateVisualization();
         }
 
         private void UpdateVisualization()
         {
-            ShowNodeRequirements(0);
-
-            SwitchNodeType();
+            ShowNodeRequirements(CurrentAmount);
+            base.UpdateTypeVisualization();
         }
 
         private void ShowNodeRequirements(int currentAmount)
@@ -363,20 +358,10 @@ namespace GridField.Cells
             _textMeshProUGUI.text = $"{currentAmount}/{requiredAmount}";
         }
 
-        private void SwitchNodeType()
+        private IEnumerator CheckNeighboursRoutine()
         {
-            switch (CellType)
-            {
-                case CellType.dark:
-                    _nodeVisualization.color = Color.gray;
-                    break;
-                case CellType.light:
-                    _nodeVisualization.color = Color.yellow;
-                    break;
-                default:
-                    _nodeVisualization.color = Color.magenta;
-                    break;
-            }
+            yield return new WaitForEndOfFrame();
+            CheckNeighbours();
         }
     }
 }

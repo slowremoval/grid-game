@@ -7,6 +7,8 @@ namespace GridField.Cells
         light,
         empty,
         rotating, 
-        solid
+        stableDark,
+        stableLight,
+        universal
     }
 }
