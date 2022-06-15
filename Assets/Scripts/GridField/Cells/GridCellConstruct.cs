@@ -11,6 +11,8 @@ namespace GridField.Cells
 
         [SerializeField] private GameObject _visualization;
 
+        [SerializeField] private GameObject[] _unactiveSidesMarkers;
+
         public int requiredAmount { get; private set; }
 
         [HideInInspector] public CellType ThisCellType;
@@ -21,7 +23,17 @@ namespace GridField.Cells
 
         private bool SideSetActive(int sideNumber)
         {
-            UnactiveSides[sideNumber - 1] = UnactiveSides[sideNumber - 1] == 0 ? (CellSide)sideNumber : (CellSide)0;
+            if (UnactiveSides[sideNumber - 1] == 0)
+            {
+                UnactiveSides[sideNumber - 1] = (CellSide)sideNumber;
+                _unactiveSidesMarkers[sideNumber - 1].SetActive(true);
+            }
+            else
+            {
+                UnactiveSides[sideNumber - 1] = (CellSide)0;
+                _unactiveSidesMarkers[sideNumber - 1].SetActive(false);
+            }
+
             return UnactiveSides[sideNumber - 1] == 0;
         }
 
