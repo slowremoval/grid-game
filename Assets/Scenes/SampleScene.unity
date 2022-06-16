@@ -175,7 +175,7 @@ MonoBehaviour:
   Nodes: []
   Cells: []
   _colsCount: 15
-  _rowsCount: 9
+  _rowsCount: 11
   _cellPrefab: {fileID: 832676399958876413, guid: b12fc3ca49be6024fb5c6077d30b972f, type: 3}
   _cellConstructPrefab: {fileID: 832676399958876413, guid: a4532cca58c653142b136de98bcae43f, type: 3}
   _cellNodePrefab: {fileID: 4917702919658098633, guid: 49ca9d735dab0bf41bb1f88735c6e066, type: 3}
@@ -183,8 +183,7 @@ MonoBehaviour:
   _cellRotatingPrefab: {fileID: 1564913576499885117, guid: 962def547233df44f944a443887060b4, type: 3}
   _cellStablePrefab: {fileID: 1451034754184140280, guid: 55e10ff27884de54e8b68b78cbd0ad6d, type: 3}
   _cellUniversalPrefab: {fileID: 1451034754184140280, guid: 55e10ff27884de54e8b68b78cbd0ad6d, type: 3}
-  _spacing: 42
-  _levelName: 03
+  _levelName: 1
 --- !u!222 &492472910
 CanvasRenderer:
   m_ObjectHideFlags: 0

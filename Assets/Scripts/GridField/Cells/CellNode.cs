@@ -97,7 +97,7 @@ namespace GridField.Cells
                 }
                 else
                 {
-                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
+                    if ( Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
                     {
                         break;
                     }
@@ -163,7 +163,7 @@ namespace GridField.Cells
                 }
                 else
                 {
-                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
+                    if (Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
                     {
                         break;
                     }
@@ -237,7 +237,7 @@ namespace GridField.Cells
                 }
                 else
                 {
-                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
+                    if (Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
                     {
                         break;
                     }
@@ -302,7 +302,7 @@ namespace GridField.Cells
                 }
                 else
                 {
-                    if (step > 1 && Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
+                    if (Mathf.Abs(simpleCell.Coordinates.y - _previousCell.Coordinates.y) > 1)
                     {
                         break;
                     }
