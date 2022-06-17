@@ -13,26 +13,26 @@ namespace GridField.Cells
 
         [HideInInspector] public int CurrentAmount;
 
-        // public void CheckNeighbours(GridCell obj)
-        // {
-        //     int neighboursCount = 0;
-        //
-        //     neighboursCount += CheckHorizontal();
-        //     neighboursCount += CheckVertical();
-        //
-        //     CurrentAmount = neighboursCount;
-        //
-        //     ShowNodeRequirements(CurrentAmount);
-        // }
+        public void CheckNeighbours()
+        {
+            int neighboursCount = 0;
+
+            neighboursCount += CheckHorizontal();
+            neighboursCount += CheckVertical();
+
+            CurrentAmount = neighboursCount;
+
+            ShowNodeRequirements(CurrentAmount);
+        }
 
 
         private int CheckVertical()
         {
             int count = 0;
 
-            count = CheckUnderSide(count);
-
             count = CheckUpperSide(count);
+
+            count = CheckUnderSide(count);
 
             return count;
         }
@@ -48,7 +48,7 @@ namespace GridField.Cells
             return count;
         }
 
-        private int CheckUpperSide(int count)
+        private int CheckUnderSide(int count)
         {
             int step = 1;
 
@@ -69,6 +69,7 @@ namespace GridField.Cells
 
                 if (simpleCell.UnactiveSides.Contains(CellSide.down))
                 {
+                    Debug.Log($"top is false!");
                     isCountActive = false;
                 }
 
@@ -96,7 +97,7 @@ namespace GridField.Cells
                 }
                 else
                 {
-                    if (Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
+                    if ( Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
                     {
                         break;
                     }
@@ -111,16 +112,17 @@ namespace GridField.Cells
             return count;
         }
 
-        private int CheckUnderSide(int count)
+        private int CheckUpperSide(int count)
         {
             int step = 1;
 
             bool isCountActive = true;
-            GridCell previousCell = this;
+            GridCell _previousCell = this;
 
             for (int index = GridData.Cells.Count - 1; index >= 0; index--)
             {
                 GridCell simpleCell = GridData.Cells[index];
+
                 if (simpleCell.Coordinates.y != Coordinates.y)
                 {
                     continue;
@@ -136,7 +138,7 @@ namespace GridField.Cells
                     isCountActive = false;
                 }
 
-                if (step > 1 && previousCell.UnactiveSides.Contains(CellSide.down))
+                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.down))
                 {
                     isCountActive = false;
                 }
@@ -157,22 +159,19 @@ namespace GridField.Cells
                 {
                     count += temp;
 
-                    ConnectionBetweenCellsSetActive(simpleCell, previousCell, CellSide.top, CellSide.down, true);
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.top, CellSide.down, true);
                 }
                 else
                 {
-                    if (Mathf.Abs(simpleCell.Coordinates.x - previousCell.Coordinates.x) > 1)
+                    if (Mathf.Abs(simpleCell.Coordinates.x - _previousCell.Coordinates.x) > 1)
                     {
                         break;
                     }
 
-                    //if (hasNode == false)
-                    {
-                        ConnectionBetweenCellsSetActive(simpleCell, previousCell, CellSide.top, CellSide.down, false);
-                    }
+                    ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.top, CellSide.down, false);
                 }
 
-                previousCell = simpleCell;
+                _previousCell = simpleCell;
                 step++;
             }
 
@@ -194,7 +193,7 @@ namespace GridField.Cells
             bool isCountActive = true;
 
             GridCell _previousCell = this;
-            
+
             for (int index = GridData.Cells.Count - 1; index >= 0; index--)
             {
                 var simpleCell = GridData.Cells[index];
@@ -242,6 +241,7 @@ namespace GridField.Cells
                     {
                         break;
                     }
+
                     ConnectionBetweenCellsSetActive(simpleCell, _previousCell, CellSide.right, CellSide.left, false);
                 }
 
@@ -353,7 +353,7 @@ namespace GridField.Cells
             base.UpdateTypeVisualization();
         }
 
-       public void ShowNodeRequirements(int currentAmount)
+        private void ShowNodeRequirements(int currentAmount)
         {
             _textMeshProUGUI.text = $"{currentAmount}/{requiredAmount}";
         }
@@ -361,8 +361,7 @@ namespace GridField.Cells
         private IEnumerator CheckNeighboursRoutine()
         {
             yield return new WaitForEndOfFrame();
-            //CheckNeighbours(this);
+            CheckNeighbours();
         }
-
     }
 }

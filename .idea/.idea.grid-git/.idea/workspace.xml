@@ -8,9 +8,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/351e49e2a5bf4fd6beabb458ce2255f3ff600/0e/138b5acc/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/695d1cc93cca45069c528c15c9fdd7493e2800/0c/b2ab89de/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/f3/692d36d2/UnitySynchronizationContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/PlaceholderConnectionProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/GridCellConstructEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs" root0="SKIP_HIGHLIGHTING" />
@@ -57,10 +57,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="15300">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="15300" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -91,7 +91,6 @@
       <workItem from="1655276143513" duration="1786000" />
       <workItem from="1655305775483" duration="5669000" />
       <workItem from="1655313965165" duration="4667000" />
-      <workItem from="1655448692226" duration="8903000" />
     </task>
     <servers />
   </component>
@@ -108,121 +107,56 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>61</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="57" containingFunctionPresentation="method 'CheckRightSide'">
-            <startOffsets>
-              <option value="1602" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1677" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>63</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="59" containingFunctionPresentation="method 'CheckRightSide'">
-            <startOffsets>
-              <option value="1695" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1728" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>65</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="61" containingFunctionPresentation="method 'CheckRightSide'">
-            <startOffsets>
-              <option value="1767" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1794" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>67</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="63" containingFunctionPresentation="method 'CheckRightSide'">
-            <startOffsets>
-              <option value="1869" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1882" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>70</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="66" containingFunctionPresentation="method 'CheckRightSide'">
-            <startOffsets>
-              <option value="1934" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2000" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
           <line>72</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="68" containingFunctionPresentation="method 'CheckRightSide'">
+          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="75" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
-              <option value="2039" />
+              <option value="1717" />
             </startOffsets>
             <endOffsets>
-              <option value="2061" />
+              <option value="1739" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="29" />
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>75</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="71" containingFunctionPresentation="method 'CheckRightSide'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
+          <line>77</line>
+          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="80" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
-              <option value="2097" />
+              <option value="1881" />
             </startOffsets>
             <endOffsets>
-              <option value="2154" />
+              <option value="1903" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="30" />
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>40</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="40" containingFunctionPresentation="method 'CheckRightSide'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
+          <line>88</line>
+          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="91" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
-              <option value="948" />
+              <option value="2194" />
             </startOffsets>
             <endOffsets>
-              <option value="985" />
+              <option value="2216" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="34" />
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>44</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="44" containingFunctionPresentation="method 'CheckRightSide'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/GridCell.cs</url>
+          <line>54</line>
+          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\GridCell.cs" initialLine="54" containingFunctionPresentation="method 'HasNeighbours'">
             <startOffsets>
-              <option value="1034" />
+              <option value="1445" />
             </startOffsets>
             <endOffsets>
-              <option value="1118" />
+              <option value="1637" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="35" />
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

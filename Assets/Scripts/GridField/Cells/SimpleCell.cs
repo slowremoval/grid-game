@@ -16,7 +16,7 @@ namespace GridField.Cells
 
         protected Image _cellImage;
         
-        public event Action<GridCell> OnColorChanged;
+        public event Action OnColorChanged;
 
         private void Start()
         {
@@ -65,6 +65,6 @@ namespace GridField.Cells
             SendVisualizationChanged();
         }
 
-        protected void SendVisualizationChanged() => OnColorChanged?.Invoke(this);
+        protected void SendVisualizationChanged() => OnColorChanged?.Invoke();
     }
 }
