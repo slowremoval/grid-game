@@ -20,7 +20,7 @@ namespace GridField
         [SerializeField] private GameObject _cellRotatingPrefab;
         [SerializeField] private GameObject _cellStablePrefab;
         [SerializeField] private GameObject _cellUniversalPrefab;
-        
+
         [Space] [SerializeField] private string _levelName;
 
         private float _spacing = 42;
@@ -126,7 +126,7 @@ namespace GridField
                 {
                     if (cell is SimpleCell simpleCell)
                     {
-                        simpleCell.OnColorChanged -= node.CheckNeighbours;
+                        //simpleCell.OnColorChanged -= node.CheckNeighbours;
                     }
                 }
             }
@@ -140,7 +140,7 @@ namespace GridField
                 {
                     if (cell is SimpleCell simpleCell)
                     {
-                        simpleCell.OnColorChanged += node.CheckNeighbours;
+                        //simpleCell.OnColorChanged += node.CheckNeighbours;
                     }
                 }
             }
@@ -221,6 +221,8 @@ namespace GridField
             Cells = new List<GridCell>();
             Nodes = new List<CellNode>();
 
+            GridCell currentCell = default;
+
             int count = 0;
 
             for (int i = 0; i < _rowsCount; i++)
@@ -230,30 +232,32 @@ namespace GridField
                     switch (lvl.CellTypes[count])
                     {
                         case CellType.simple:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellPrefab, Cells);
+                            currentCell = ConfigureCell<GridCell>(lvl, i, j, count, _cellPrefab, Cells);
                             break;
                         case CellType.dark:
-                            ConfigureCell<CellNode>(lvl, i, j, count, _cellNodePrefab, Nodes, CellType.dark);
+                            currentCell = ConfigureCell<CellNode>(lvl, i, j, count, _cellNodePrefab, Nodes,
+                                CellType.dark);
                             break;
                         case CellType.light:
-                            ConfigureCell<CellNode>(lvl, i, j, count, _cellNodePrefab, Nodes, CellType.light);
+                            currentCell = ConfigureCell<CellNode>(lvl, i, j, count, _cellNodePrefab, Nodes,
+                                CellType.light);
                             break;
                         case CellType.empty:
                             InstantiateCell(_cellEmptyPrefab, i, j);
                             break;
                         case CellType.rotating:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellRotatingPrefab, Cells);
+                            currentCell = ConfigureCell<GridCell>(lvl, i, j, count, _cellRotatingPrefab, Cells);
                             break;
                         case CellType.stableDark:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStablePrefab, Cells,
+                            currentCell = ConfigureCell<GridCell>(lvl, i, j, count, _cellStablePrefab, Cells,
                                 CellType.stableDark);
                             break;
                         case CellType.stableLight:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStablePrefab, Cells,
+                            currentCell = ConfigureCell<GridCell>(lvl, i, j, count, _cellStablePrefab, Cells,
                                 CellType.stableLight);
                             break;
                         case CellType.universal:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellUniversalPrefab, Cells,
+                            currentCell = ConfigureCell<GridCell>(lvl, i, j, count, _cellUniversalPrefab, Cells,
                                 CellType.universal);
                             break;
                     }
@@ -262,16 +266,22 @@ namespace GridField
 
                     _allGridElements[i, j].name = $"Cell [{i}, {j}]";
                     _allGridElements[i, j].Coordinates = new Vector2(i, j);
+
+                    if (currentCell != default)
+                    {
+                        _allGridElementsList.Add(currentCell);
+                    }
                 }
             }
 
             SetGridCenter();
-            StartCoroutine(
-                DeactivateEmptyCells());
+            StartCoroutine(DeactivateEmptyCells());
+            base.InitializeGrid();
+
         }
 
 
-        private void ConfigureCell<T>(SaveData lvl, int i, int j, int count, GameObject cellPrefab, List<T> listToAdd,
+        private T ConfigureCell<T>(SaveData lvl, int i, int j, int count, GameObject cellPrefab, List<T> listToAdd,
             CellType type = CellType.simple) where T : GridCell
         {
             GameObject currentCell = InstantiateCell(cellPrefab, i, j);
@@ -287,6 +297,7 @@ namespace GridField
             }
 
             listToAdd.Add(cell);
+            return cell;
         }
 
 
