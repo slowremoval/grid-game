@@ -93,7 +93,7 @@
       <workItem from="1655305775483" duration="5669000" />
       <workItem from="1655313965165" duration="4667000" />
       <workItem from="1655541480626" duration="237000" />
-      <workItem from="1655564128071" duration="2917000" />
+      <workItem from="1655564128071" duration="5088000" />
     </task>
     <servers />
   </component>
@@ -111,7 +111,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/CellNode.cs</url>
-          <line>15</line>
+          <line>13</line>
           <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\CellNode.cs" initialLine="75" containingFunctionPresentation="method 'CheckUnderSide'">
             <startOffsets>
               <option value="1717" />
@@ -124,13 +124,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Cells/GridCell.cs</url>
-          <line>54</line>
+          <line>56</line>
           <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Cells\GridCell.cs" initialLine="54" containingFunctionPresentation="method 'HasNeighbours'">
             <startOffsets>
-              <option value="1445" />
+              <option value="1509" />
             </startOffsets>
             <endOffsets>
-              <option value="1637" />
+              <option value="1701" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="23" />

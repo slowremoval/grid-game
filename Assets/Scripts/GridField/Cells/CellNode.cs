@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Linq;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace GridField.Cells
@@ -9,7 +8,6 @@ namespace GridField.Cells
     {
         [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
-        [HideInInspector] public int RequiredAmount;
 
         [HideInInspector] public int CurrentAmount;
 
@@ -30,7 +28,7 @@ namespace GridField.Cells
 
         private void ShowNodeRequirements(int currentAmount)
         {
-            _textMeshProUGUI.text = $"{currentAmount}/{RequiredAmount}";
+            _textMeshProUGUI.text = $"{currentAmount}/{Capacity}";
         }
     }
 }

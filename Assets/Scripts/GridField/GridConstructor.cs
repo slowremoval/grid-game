@@ -111,7 +111,7 @@ namespace GridField
                 {
                     GridCellConstruct currentCell = _allGridElements[i, j].GetComponent<GridCellConstruct>();
                     currentCell.SetCellType(loadedLvl.CellTypes[count]);
-                    currentCell.SetRequiredAmount(loadedLvl.RequiredAmounts[count]);
+                    currentCell.SetRequiredAmount(loadedLvl.CelCapacities[count]);
 
                     count++;
                 }
@@ -280,11 +280,7 @@ namespace GridField
             cell.CellType = type;
             cell.SetSidesProperties(lvl.UnactiveSidesVector[count], cell);
             cell.GridData = this;
-
-            if (cell is CellNode node)
-            {
-                node.RequiredAmount = lvl.RequiredAmounts[count];
-            }
+            cell.Capacity = lvl.CelCapacities[count];
 
             listToAdd.Add(cell);
             _activeGridElements.Add(cell);

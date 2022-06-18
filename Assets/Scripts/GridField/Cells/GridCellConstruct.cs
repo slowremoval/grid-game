@@ -13,7 +13,7 @@ namespace GridField.Cells
 
         [SerializeField] private GameObject[] _unactiveSidesMarkers;
 
-        public int requiredAmount { get; private set; }
+        public int CellCapacity { get; private set; }
 
         [HideInInspector] public CellType ThisCellType;
 
@@ -44,7 +44,7 @@ namespace GridField.Cells
 
         public void SetRequiredAmount(int amount)
         {
-            requiredAmount = amount;
+            CellCapacity = amount;
             UpdateCellVisualization();
         }
 
@@ -53,10 +53,16 @@ namespace GridField.Cells
             base.OnPointerDown(eventData);
             if (Input.GetMouseButton(1))
             {
-                ThisCellType =
-                    ThisCellType == CellType.simple
-                        ? CellType.empty
-                        : CellType.simple;
+                if (ThisCellType == CellType.simple)
+                {
+                    CellCapacity = 0;
+                    ThisCellType = CellType.empty;
+                }
+                else
+                {
+                    CellCapacity = 1;
+                    ThisCellType = CellType.simple;
+                }
             }
 
             UpdateCellVisualization();
@@ -90,13 +96,13 @@ namespace GridField.Cells
                 case CellType.dark:
                     _color = Color.grey;
                     _color.a = 0.81f;
-                    _textMeshProUGUI.text += $"\n_{requiredAmount}";
+                    _textMeshProUGUI.text += $"\n_{CellCapacity}";
                     break;
 
                 case CellType.light:
                     _color = Color.yellow;
                     _color.a = 0.81f;
-                    _textMeshProUGUI.text += $"\n_{requiredAmount}";
+                    _textMeshProUGUI.text += $"\n_{CellCapacity}";
                     break;
 
                 case CellType.simple:
@@ -132,54 +138,56 @@ namespace GridField.Cells
         public void SetLightNode()
         {
             ThisCellType = CellType.light;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
 
         public void SetDarkNode()
         {
             ThisCellType = CellType.dark;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
 
         public void SetSimpleCell()
         {
             ThisCellType = CellType.simple;
-            requiredAmount = 0;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
 
         public void SetEmptyCell()
         {
             ThisCellType = CellType.empty;
-            requiredAmount = 0;
+            CellCapacity = 0;
             UpdateCellVisualization();
         }
 
         public void SetRotatingCell()
         {
             ThisCellType = CellType.rotating;
-            requiredAmount = 0;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
 
         public void SetUniversalCell()
         {
             ThisCellType = CellType.universal;
-            requiredAmount = 0;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
 
         public void SetStableDarkCell()
         {
             ThisCellType = CellType.stableDark;
-            requiredAmount = 0;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
 
         public void SetStableLightCell()
         {
             ThisCellType = CellType.stableLight;
-            requiredAmount = 0;
+            CellCapacity = 1;
             UpdateCellVisualization();
         }
     }

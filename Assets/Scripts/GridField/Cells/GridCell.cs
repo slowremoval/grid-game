@@ -8,7 +8,9 @@ namespace GridField.Cells
         [HideInInspector] public Vector2 Coordinates;
         [HideInInspector] public CellSide[] UnactiveSides;
         public CellType CellType { get; set; }
-
+        
+        [HideInInspector] public int Capacity;
+        
         public CellConnectionProvider CellConnectionProvider;
 
         [HideInInspector] public Grid GridData;

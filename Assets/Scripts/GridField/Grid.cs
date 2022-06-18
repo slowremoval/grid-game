@@ -103,7 +103,7 @@ namespace GridField
             int step = 1;
             int count = 0;
             bool isCountActive = true;
-            GridCell _previousCell = cellNode;
+            GridCell previousCell = cellNode;
 
             foreach (var simpleCell in Cells)
             {
@@ -123,7 +123,7 @@ namespace GridField
                     isCountActive = false;
                 }
 
-                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.top))
+                if (step > 1 && previousCell.UnactiveSides.Contains(CellSide.top))
                 {
                     isCountActive = false;
                 }
@@ -142,11 +142,11 @@ namespace GridField
                 if (isCountActive)
                 {
                     count += temp;
-                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, _previousCell, CellSide.down,
+                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, previousCell, CellSide.down,
                         CellSide.top, true);
                 }
 
-                _previousCell = simpleCell;
+                previousCell = simpleCell;
                 step++;
             }
 
@@ -158,7 +158,7 @@ namespace GridField
             int step = 1;
             int count = 0;
             bool isCountActive = true;
-            GridCell _previousCell = cellNode;
+            GridCell previousCell = cellNode;
 
             for (int index = Cells.Count - 1; index >= 0; index--)
             {
@@ -179,7 +179,7 @@ namespace GridField
                     isCountActive = false;
                 }
 
-                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.down))
+                if (step > 1 && previousCell.UnactiveSides.Contains(CellSide.down))
                 {
                     isCountActive = false;
                 }
@@ -200,11 +200,11 @@ namespace GridField
                 {
                     count += temp;
 
-                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, _previousCell, CellSide.top,
+                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, previousCell, CellSide.top,
                         CellSide.down, true);
                 }
 
-                _previousCell = simpleCell;
+                previousCell = simpleCell;
                 step++;
             }
 
@@ -212,11 +212,11 @@ namespace GridField
         }
 
         private void ConnectionBetweenCellsSetActive(CellType currentNodeType, GridCell simpleCell,
-            GridCell _previousCell,
+            GridCell previousCell,
             CellSide first, CellSide second, bool setActive)
         {
             simpleCell.CellConnectionProvider.ConnectionSetActive(setActive, first, currentNodeType);
-            _previousCell.CellConnectionProvider.ConnectionSetActive(setActive, second, currentNodeType);
+            previousCell.CellConnectionProvider.ConnectionSetActive(setActive, second, currentNodeType);
         }
 
         private int CheckLeftSide(CellNode cellNode)
@@ -226,7 +226,7 @@ namespace GridField
 
             bool isCountActive = true;
 
-            GridCell _previousCell = cellNode;
+            GridCell previousCell = cellNode;
 
             for (int index = Cells.Count - 1; index >= 0; index--)
             {
@@ -247,7 +247,7 @@ namespace GridField
                     isCountActive = false;
                 }
 
-                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.left))
+                if (step > 1 && previousCell.UnactiveSides.Contains(CellSide.left))
                 {
                     isCountActive = false;
                 }
@@ -267,12 +267,12 @@ namespace GridField
                 {
                     count += temp;
 
-                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, _previousCell, CellSide.right,
+                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, previousCell, CellSide.right,
                         CellSide.left, true);
                 }
 
                 step++;
-                _previousCell = simpleCell;
+                previousCell = simpleCell;
             }
 
             return count;
@@ -285,7 +285,7 @@ namespace GridField
 
             bool isCountActive = true;
 
-            GridCell _previousCell = cellNode;
+            GridCell previousCell = cellNode;
 
             foreach (var simpleCell in Cells)
             {
@@ -304,7 +304,7 @@ namespace GridField
                     isCountActive = false;
                 }
 
-                if (step > 1 && _previousCell.UnactiveSides.Contains(CellSide.right))
+                if (step > 1 && previousCell.UnactiveSides.Contains(CellSide.right))
                 {
                     isCountActive = false;
                 }
@@ -325,13 +325,13 @@ namespace GridField
                 if (isCountActive)
                 {
                     count += temp;
-                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, _previousCell, CellSide.left,
+                    ConnectionBetweenCellsSetActive(cellNode.CellType, simpleCell, previousCell, CellSide.left,
                         CellSide.right, true);
                 }
 
                 step++;
 
-                _previousCell = simpleCell;
+                previousCell = simpleCell;
             }
 
             return count;
