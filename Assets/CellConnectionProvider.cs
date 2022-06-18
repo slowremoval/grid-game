@@ -7,7 +7,7 @@ public class CellConnectionProvider : MonoBehaviour
     [Header("Cell item connections")] [Space] [SerializeField]
     private List<CellConnection> _cellItemConnections;
     
-    public void ConnectionSetActive(bool setActive, CellSide side, CellType type)
+    public void ConnectionSetActive(bool setActive, CellSide side, CellType type = CellType.simple)
     {
         switch (setActive)
         {
@@ -19,4 +19,16 @@ public class CellConnectionProvider : MonoBehaviour
                 break;
         }
     }
+
+    public void DeactivateHorizontalConnections()
+    {
+        ConnectionSetActive(false, CellSide.left);
+        ConnectionSetActive(false, CellSide.right);
+    }
+
+    public void DeactivateVerticalConnections()
+    {
+        ConnectionSetActive(false, CellSide.top);
+        ConnectionSetActive(false, CellSide.down);
+    } 
 }

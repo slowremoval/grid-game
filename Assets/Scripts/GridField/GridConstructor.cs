@@ -53,7 +53,7 @@ namespace GridField
         public void StartLevel()
         {
             DesubscribeToSimpleCellsChanging();
-
+            _activeGridElements = new List<GridCell>();
             SaveData loadedLvl = LoadLevel(_levelName);
 
             if (loadedLvl is null)
@@ -126,7 +126,7 @@ namespace GridField
                 {
                     if (cell is SimpleCell simpleCell)
                     {
-                        simpleCell.OnColorChanged -= node.CheckNeighbours;
+                        simpleCell.OnColorChanged -= base.RecalculateNeighbourAxises;
                     }
                 }
             }
@@ -140,7 +140,7 @@ namespace GridField
                 {
                     if (cell is SimpleCell simpleCell)
                     {
-                        simpleCell.OnColorChanged += node.CheckNeighbours;
+                        simpleCell.OnColorChanged += base.RecalculateNeighbourAxises;
                     }
                 }
             }
@@ -283,10 +283,11 @@ namespace GridField
 
             if (cell is CellNode node)
             {
-                node.requiredAmount = lvl.RequiredAmounts[count];
+                node.RequiredAmount = lvl.RequiredAmounts[count];
             }
 
             listToAdd.Add(cell);
+            _activeGridElements.Add(cell);
         }
 
 
