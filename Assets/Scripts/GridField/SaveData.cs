@@ -13,6 +13,11 @@ namespace GridField
 
         public void SetSaveData(GridCell[,] grid)
         {
+            if (grid == null || grid.Length == 0)
+            {
+                return;
+            }
+            
             GridSize = new Vector2(grid.GetLength(0), grid.GetLength(1));
             Coordinates = new Vector2[grid.Length];
             CellTypes = new CellType[grid.Length];

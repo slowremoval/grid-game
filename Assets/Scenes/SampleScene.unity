@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -839.99994, y: -479.99997}
+  m_AnchoredPosition: {x: -840, y: -480}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &492472907
@@ -174,8 +174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nodes: []
   Cells: []
+  _activeGridElements: []
   _colsCount: 15
-  _rowsCount: 11
+  _rowsCount: 9
   _cellPrefab: {fileID: 832676399958876413, guid: b12fc3ca49be6024fb5c6077d30b972f, type: 3}
   _cellConstructPrefab: {fileID: 832676399958876413, guid: a4532cca58c653142b136de98bcae43f, type: 3}
   _cellNodePrefab: {fileID: 4917702919658098633, guid: 49ca9d735dab0bf41bb1f88735c6e066, type: 3}

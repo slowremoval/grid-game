@@ -20,7 +20,7 @@ namespace GridField
         [SerializeField] private GameObject _cellRotatingPrefab;
         [SerializeField] private GameObject _cellStablePrefab;
         [SerializeField] private GameObject _cellUniversalPrefab;
-        
+
         [Space] [SerializeField] private string _levelName;
 
         private float _spacing = 42;
@@ -112,7 +112,8 @@ namespace GridField
                     GridCellConstruct currentCell = _allGridElements[i, j].GetComponent<GridCellConstruct>();
                     currentCell.SetCellType(loadedLvl.CellTypes[count]);
                     currentCell.SetRequiredAmount(loadedLvl.CelCapacities[count]);
-
+                    currentCell.SetSidesProperties(loadedLvl.UnactiveSidesVector[count], currentCell);
+                    currentCell.ShowUnactiveSides();
                     count++;
                 }
             }
@@ -120,7 +121,7 @@ namespace GridField
 
         private void DesubscribeToSimpleCellsChanging()
         {
-            foreach (CellNode node in Nodes)
+            foreach (CellNode unused in Nodes)
             {
                 foreach (GridCell cell in Cells)
                 {
@@ -134,7 +135,7 @@ namespace GridField
 
         private void SubscribeToSimpleCellsChanging()
         {
-            foreach (CellNode node in Nodes)
+            foreach (CellNode unused in Nodes)
             {
                 foreach (GridCell cell in Cells)
                 {
@@ -166,23 +167,37 @@ namespace GridField
             {
                 for (int j = 0; j < _colsCount; j++)
                 {
-                    InstantiateCell(cellPrefab, i, j);
+                    var cell = InstantiateCell(cellPrefab, i, j);
+
+                    if (cell.TryGetComponent<GridCell>(out var gridCell))
+                    {
+                        gridCell.InitializeGrid();
+                    }
                 }
             }
 
             SetGridCenter();
         }
 
-        private GameObject InstantiateCell(GameObject cellPrefab, int i, int j)
+        private GridCell InstantiateCell(GameObject cellPrefab, int i, int j)
         {
-            GameObject instantiatedCell = Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
+            GameObject instantiatedCellGameObject =
+                Instantiate(cellPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
+
+            if (instantiatedCellGameObject.gameObject.TryGetComponent(out GridCell instantiatedCell) == false)
+            {
+                return default;
+            }
+
             AddCellToArray(instantiatedCell, i, j);
+            
             RectTransform instantiatedCellRect = instantiatedCell.transform as RectTransform;
+            
             instantiatedCellRect.anchoredPosition =
                 new Vector2(
                     j * (_cellSize + _spacing),
                     i * (_cellSize + _spacing));
-            _allGridElements[i, j] = instantiatedCell.GetComponent<GridCell>();
+            _allGridElements[i, j] = instantiatedCell;
             _allGridElements[i, j].Coordinates = new Vector2(i, j);
             _allGridElements[i, j].name = $"Cell [{i}, {j}]";
 
@@ -266,24 +281,24 @@ namespace GridField
             }
 
             SetGridCenter();
-            StartCoroutine(
-                DeactivateEmptyCells());
+            StartCoroutine(DeactivateEmptyCells());
         }
 
 
         private void ConfigureCell<T>(SaveData lvl, int i, int j, int count, GameObject cellPrefab, List<T> listToAdd,
             CellType type = CellType.simple) where T : GridCell
         {
-            GameObject currentCell = InstantiateCell(cellPrefab, i, j);
-            T cell = currentCell.GetComponent<T>();
+            GridCell currentCell = InstantiateCell(cellPrefab, i, j);
+            
+            if (!(currentCell is T cellGeneric)) return;
+            
+            cellGeneric.CellType = type;
+            cellGeneric.SetSidesProperties(lvl.UnactiveSidesVector[count], cellGeneric);
+            cellGeneric.GridData = this;
+            cellGeneric.Capacity = lvl.CelCapacities[count];
 
-            cell.CellType = type;
-            cell.SetSidesProperties(lvl.UnactiveSidesVector[count], cell);
-            cell.GridData = this;
-            cell.Capacity = lvl.CelCapacities[count];
-
-            listToAdd.Add(cell);
-            _activeGridElements.Add(cell);
+            listToAdd.Add(cellGeneric);
+            _activeGridElements.Add(cellGeneric);
         }
 
 
@@ -299,8 +314,8 @@ namespace GridField
             }
         }
 
-        private void AddCellToArray(GameObject gridCell, int i, int j) =>
-            _allGridElements[i, j] = gridCell.GetComponent<GridCell>();
+        private void AddCellToArray(GridCell gridCell, int i, int j) =>
+            _allGridElements[i, j] = gridCell;
 
         private void ClearGrid()
         {

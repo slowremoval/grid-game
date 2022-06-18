@@ -1,3 +1,4 @@
+using System.Linq;
 using GridField.Cells;
 using UnityEditor;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Editor
             GridCellConstruct builder = (GridCellConstruct)target;
 
             SetCellType(builder);
-            
+
             SideSetActive(builder);
 
             CreateNumberButtons(builder, 21);
@@ -75,41 +76,45 @@ namespace Editor
 
         private void DeactivateLeftSideButton(GridCellConstruct builder)
         {
+            _leftSideActive = !builder.UnactiveSides.Contains(CellSide.left);
             GUI.backgroundColor = _leftSideActive ? Color.green : Color.grey;
-
             if (GUILayout.Button("Left Side", GUILayout.Height(33)))
             {
-                _leftSideActive = builder.ChangeLeftSideState();
+                builder.ChangeLeftSideState();
             }
         }
 
         private void DeactivateRightSideButton(GridCellConstruct builder)
         {
+            _rightSideActive = !builder.UnactiveSides.Contains(CellSide.right);
             GUI.backgroundColor = _rightSideActive ? Color.green : Color.grey;
 
             if (GUILayout.Button("Right Side", GUILayout.Height(33)))
             {
-                _rightSideActive = builder.ChangeRightSideState();
+                builder.ChangeRightSideState();
             }
         }
 
         private void DeactivateUpperSideButton(GridCellConstruct builder)
         {
+            _upperSideActive = !builder.UnactiveSides.Contains(CellSide.top);
             GUI.backgroundColor = _upperSideActive ? Color.green : Color.grey;
 
             if (GUILayout.Button("Upper Side", GUILayout.Height(33)))
             {
-                _upperSideActive = builder.ChangeUpperSideState();
+                builder.ChangeUpperSideState();
             }
         }
 
         private void DeactivateUnderSideButton(GridCellConstruct builder)
         {
+            _underSideActive = !builder.UnactiveSides.Contains(CellSide.down);
+
             GUI.backgroundColor = _underSideActive ? Color.green : Color.grey;
 
             if (GUILayout.Button("Under Side", GUILayout.Height(33)))
             {
-                _underSideActive = builder.ChangeUnderSideState();
+                builder.ChangeUnderSideState();
             }
         }
 

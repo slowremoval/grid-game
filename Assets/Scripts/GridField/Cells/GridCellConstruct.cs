@@ -37,6 +37,19 @@ namespace GridField.Cells
             return UnactiveSides[sideNumber - 1] == 0;
         }
 
+        private void SideSetActive(int sideNumber, bool setActive) => _unactiveSidesMarkers[sideNumber - 1].SetActive(setActive);
+
+        public void ShowUnactiveSides()
+        {
+            for (int i = 0; i < UnactiveSides.Length; i++)
+            {
+                if (UnactiveSides[i] > 0)
+                {
+                    SideSetActive((int)UnactiveSides[i], true);
+                }
+            }
+        }
+        
         public bool ChangeLeftSideState() => SideSetActive((int)CellSide.left);
         public bool ChangeRightSideState() => SideSetActive((int)CellSide.right);
         public bool ChangeUpperSideState() => SideSetActive((int)CellSide.top);
