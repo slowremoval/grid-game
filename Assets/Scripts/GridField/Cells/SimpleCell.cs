@@ -65,6 +65,6 @@ namespace GridField.Cells
             SendVisualizationChanged();
         }
 
-        protected void SendVisualizationChanged() => OnColorChanged?.Invoke(this);
+        public void SendVisualizationChanged() => OnColorChanged?.Invoke(this);
     }
 }

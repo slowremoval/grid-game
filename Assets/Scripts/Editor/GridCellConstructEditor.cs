@@ -56,6 +56,20 @@ namespace Editor
             SetUniversalCellButton(builder);
 
             GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+
+            SetCountingCellButton(builder);
+
+            GUILayout.EndHorizontal();
+        }
+
+        private void SetCountingCellButton(GridCellConstruct builder)
+        {
+            GUI.backgroundColor = Color.magenta;
+            if (GUILayout.Button("Set Counting Cell", GUILayout.Height(33)))
+            {
+                builder.SetCountingCell();
+            }
         }
 
         private void SideSetActive(GridCellConstruct builder)

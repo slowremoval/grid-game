@@ -9,6 +9,7 @@ namespace GridField.Cells
         rotating, 
         stableDark,
         stableLight,
-        universal
+        universal,
+        counting
     }
 }

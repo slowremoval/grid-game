@@ -9,9 +9,19 @@ public class RotatingCell : SimpleCell
 
     private void Start()
     {
+        base.InitializeCellImage();
+    }
+
+    private void OnEnable()
+    {
         _rotationTrigger.OnRotationTriggerActivated += RotateUnactiveSides;
         _rotationTrigger.OnRotationTriggerActivated += RotateVisualization;
-        base.InitializeCellImage();
+    }
+
+    private void OnDisable()
+    {
+        _rotationTrigger.OnRotationTriggerActivated -= RotateUnactiveSides;
+        _rotationTrigger.OnRotationTriggerActivated -= RotateVisualization;
     }
 
     private void RotateUnactiveSides()

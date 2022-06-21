@@ -20,6 +20,7 @@ namespace GridField
         [SerializeField] private GameObject _cellRotatingPrefab;
         [SerializeField] private GameObject _cellStablePrefab;
         [SerializeField] private GameObject _cellUniversalPrefab;
+        [SerializeField] private GameObject _cellCountingPrefab;
 
         [Space] [SerializeField] private string _levelName;
 
@@ -121,28 +122,22 @@ namespace GridField
 
         private void DesubscribeToSimpleCellsChanging()
         {
-            foreach (CellNode unused in Nodes)
+            foreach (GridCell cell in Cells)
             {
-                foreach (GridCell cell in Cells)
+                if (cell is SimpleCell simpleCell)
                 {
-                    if (cell is SimpleCell simpleCell)
-                    {
-                        simpleCell.OnColorChanged -= base.RecalculateNeighbourAxises;
-                    }
+                    simpleCell.OnColorChanged -= base.RecalculateNeighbourAxises;
                 }
             }
         }
 
         private void SubscribeToSimpleCellsChanging()
         {
-            foreach (CellNode unused in Nodes)
+            foreach (GridCell cell in Cells)
             {
-                foreach (GridCell cell in Cells)
+                if (cell is SimpleCell simpleCell)
                 {
-                    if (cell is SimpleCell simpleCell)
-                    {
-                        simpleCell.OnColorChanged += base.RecalculateNeighbourAxises;
-                    }
+                    simpleCell.OnColorChanged += base.RecalculateNeighbourAxises;
                 }
             }
         }
@@ -190,9 +185,9 @@ namespace GridField
             }
 
             AddCellToArray(instantiatedCell, i, j);
-            
+
             RectTransform instantiatedCellRect = instantiatedCell.transform as RectTransform;
-            
+
             instantiatedCellRect.anchoredPosition =
                 new Vector2(
                     j * (_cellSize + _spacing),
@@ -271,6 +266,10 @@ namespace GridField
                             ConfigureCell<GridCell>(lvl, i, j, count, _cellUniversalPrefab, Cells,
                                 CellType.universal);
                             break;
+                        case CellType.counting:
+                            ConfigureCell<GridCell>(lvl, i, j, count, _cellCountingPrefab, Cells,
+                                CellType.counting);
+                            break;
                     }
 
                     count++;
@@ -282,6 +281,21 @@ namespace GridField
 
             SetGridCenter();
             StartCoroutine(DeactivateEmptyCells());
+
+            StartCoroutine(StartNodesCheck(1));
+        }
+
+        private IEnumerator StartNodesCheck(int framesToWait = 1)
+        {
+            for (int i = 0; i < framesToWait; i++)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            foreach (var node in Nodes)
+            {
+                CheckNeighbours(node);
+            }
         }
 
 
@@ -289,9 +303,9 @@ namespace GridField
             CellType type = CellType.simple) where T : GridCell
         {
             GridCell currentCell = InstantiateCell(cellPrefab, i, j);
-            
+
             if (!(currentCell is T cellGeneric)) return;
-            
+
             cellGeneric.CellType = type;
             cellGeneric.SetSidesProperties(lvl.UnactiveSidesVector[count], cellGeneric);
             cellGeneric.GridData = this;

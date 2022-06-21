@@ -139,6 +139,10 @@ namespace GridField.Cells
                     _color = Color.cyan;
                     _color.a = 0.8f;
                     break;
+                case CellType.counting:
+                    _color = Color.red;
+                    _color.a = 0.7f;
+                    break;
             }
         }
 
@@ -201,6 +205,13 @@ namespace GridField.Cells
         {
             ThisCellType = CellType.stableLight;
             CellCapacity = 1;
+            UpdateCellVisualization();
+        }
+
+        public void SetCountingCell()
+        {
+            ThisCellType = CellType.counting;
+            CellCapacity = 0;
             UpdateCellVisualization();
         }
     }
