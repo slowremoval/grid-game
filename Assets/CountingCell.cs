@@ -17,10 +17,10 @@ public class CountingCell : SimpleCell
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
-        UnpateVisualization();
+        UpdateVisualization();
     }
 
-    public void UnpateVisualization()
+    public void UpdateVisualization()
     {
         _text.text = Capacity.ToString();
     }

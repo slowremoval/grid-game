@@ -25,6 +25,14 @@ namespace GridField
             FindCurrentCountingCells();
             
             FindCurrentNodes(gridCell);
+
+            foreach (GridCell activeGridElement in _activeGridElements)
+            {
+                if (activeGridElement is CountingCell countingCell)
+                {
+                    CheckNeighbours(countingCell);
+                }
+            }
             
             foreach (CellNode node in Nodes)
             {
@@ -162,11 +170,13 @@ namespace GridField
                     isCountActive = false;
                 }
 
+                bool ignoreCounting = cellNode is CountingCell;
+                
                 bool temp = CheckAxisCell(
                     simpleCell.CellType, cellNode.CellType,
                     (int)simpleCell.Coordinates.x,
                     (int)cellNode.Coordinates.x,
-                    step);
+                    step, ignoreCounting);
 
                 if (temp == false)
                 {
@@ -189,21 +199,14 @@ namespace GridField
 
         private int IncrementCounter(int count, GridCell cell, ref bool isCountActive)
         {
-            if (cell.CellType == CellType.simple)
-            {
-                isCountActive = false;
-                return 0;
-            }
             if (cell is CountingCell countingCell)
             {
-                CheckNeighbours(countingCell);
                 count = countingCell.Capacity;
-                Debug.Log(count);
                 isCountActive = false;
             }
             else
             {
-                count += 1;
+                count += 1; 
             }
             
             return count;
@@ -212,12 +215,14 @@ namespace GridField
         private void CheckNeighbours(CountingCell countingCell)
         {
             int neighboursCount = 0;
+            
+            countingCell.Capacity = 0;
             neighboursCount += CheckHorizontal(countingCell);
             neighboursCount += CheckVertical(countingCell);
 
             countingCell.Capacity = neighboursCount;
 
-            countingCell.UnpateVisualization();
+            countingCell.UpdateVisualization();
         }
 
         private int CheckUpperSide(GridCell cellNode)
@@ -251,11 +256,12 @@ namespace GridField
                     isCountActive = false;
                 }
 
+                bool ignoreCounting = cellNode is CountingCell;
                 bool temp = CheckAxisCell(
                     simpleCell.CellType, cellNode.CellType,
                     (int)simpleCell.Coordinates.x,
                     (int)cellNode.Coordinates.x,
-                    -step);
+                    -step, ignoreCounting);
 
                 if (temp == false)
                 {
@@ -319,11 +325,12 @@ namespace GridField
                     isCountActive = false;
                 }
 
+                bool ignoreCounting = cellNode is CountingCell;
                 bool temp = CheckAxisCell(
                     simpleCell.CellType, cellNode.CellType,
                     (int)simpleCell.Coordinates.y,
                     (int)cellNode.Coordinates.y,
-                    -step);
+                    -step, ignoreCounting);
 
                 if (temp == false)
                 {
@@ -354,7 +361,7 @@ namespace GridField
 
             GridCell previousCell = cellNode;
 
-            foreach (var simpleCell in Cells)
+            foreach (GridCell simpleCell in Cells)
             {
                 if ((int)simpleCell.Coordinates.x != (int)cellNode.Coordinates.x)
                 {
@@ -376,13 +383,13 @@ namespace GridField
                     isCountActive = false;
                 }
 
-
+                bool ignoreCounting = cellNode is CountingCell;
                 bool temp = CheckAxisCell(
                     simpleCell.CellType,
                     cellNode.CellType,
                     (int)simpleCell.Coordinates.y,
                     (int)cellNode.Coordinates.y,
-                    step);
+                    step, ignoreCounting);
 
                 if (temp == false)
                 {
@@ -407,8 +414,13 @@ namespace GridField
 
 
         private bool CheckAxisCell(CellType cellType, CellType currentNodeType, int cellCoordinate, int nodeCoordinate,
-            int step = 1)
+            int step = 1, bool ignoreCounting = false)
         {
+            if (ignoreCounting && cellType == CellType.counting)
+            {
+                return false;
+            }
+            
             if (cellType != currentNodeType && cellType != CellType.universal) return false;
 
             if (cellCoordinate == nodeCoordinate) return false;
