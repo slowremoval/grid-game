@@ -7,8 +7,15 @@ public class CountingCell : SimpleCell
 {
     [SerializeField] private Text _text;
 
-    public bool isChecked = false;
-    
+    [SerializeField]private int[] NeighboursOnSides = new int[4];
+
+    public void ArrayToSIdesValues(int[] neighboursOnSides)
+    {
+        for (int i = 0; i < NeighboursOnSides.Length; i++)
+        {
+            NeighboursOnSides[i] = neighboursOnSides[i];
+        }
+    }    
     private void Start()
     {
         base.InitializeCellImage();

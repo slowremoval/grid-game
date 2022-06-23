@@ -62,10 +62,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23440">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="23440" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -98,7 +98,7 @@
       <workItem from="1655313965165" duration="4667000" />
       <workItem from="1655541480626" duration="237000" />
       <workItem from="1655564128071" duration="9897000" />
-      <workItem from="1655994984840" duration="2953000" />
+      <workItem from="1655994984840" duration="5304000" />
     </task>
     <servers />
   </component>
@@ -126,6 +126,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
+          <line>60</line>
+          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="60" containingFunctionPresentation="method 'CheckNeighbours'">
+            <startOffsets>
+              <option value="1688" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1729" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

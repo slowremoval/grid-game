@@ -9,6 +9,7 @@ namespace GridField
     {
         [HideInInspector] public List<CellNode> Nodes;
         [HideInInspector] public List<GridCell> Cells;
+        [HideInInspector] public List<CountingCell> CountingCells;
 
         public GridCell[,] _allGridElements;
         public List<GridCell> _activeGridElements;
@@ -24,7 +25,21 @@ namespace GridField
 
             FindCurrentNodes(gridCell);
 
+            RecalculateCountingCellsNeighbours();
+            
+            RecalculateNodesNeighbours();
+        }
 
+        private void RecalculateCountingCellsNeighbours()
+        {
+            foreach (CountingCell countingCell in CountingCells)
+            {
+                CheckNeighbours(countingCell, Cells);
+            }
+        }
+
+        private void RecalculateNodesNeighbours()
+        {
             foreach (CellNode node in currentNodes)
             {
                 CheckNeighbours(node);
@@ -33,11 +48,19 @@ namespace GridField
 
         protected void CheckNeighbours(CellNode node)
         {
-            int neighboursCount = CheckCellNeighbours(node);
+            int[] neighboursCount = CheckCellNeighbours(node, _activeGridElements);
 
-            node.CurrentAmount = neighboursCount;
+            node.CurrentAmount = neighboursCount.Sum();
 
             node.UpdateVisualization();
+        }
+        protected void CheckNeighbours<T>(CountingCell cell, List<T> listToCheck) where T : GridCell
+        {
+            int[] neighboursCount = CheckCellNeighbours(cell, listToCheck);
+
+            cell.ArrayToSIdesValues(neighboursCount);
+
+            cell.UpdateVisualization();
         }
 
         private void DeactivateVerticalAndHorizontalConnections(GridCell gridCell)
@@ -77,14 +100,14 @@ namespace GridField
             }
         }
 
-        private int CheckUpperSide(GridCell cell)
+        private int CheckUpperSide<T>(GridCell cell, List<T> listToCheck) where T : GridCell
         {
             int step = 1;
             int count = 0;
             bool isCountActive = true;
             GridCell previousCell = cell;
 
-            foreach (GridCell currentCell in Cells)
+            foreach (T currentCell in listToCheck)
             {
                 if ((int)currentCell.Coordinates.y != (int)cell.Coordinates.y)
                 {
@@ -121,6 +144,12 @@ namespace GridField
             int currentCellCoordinates, int step, GridCell previousCell,
             ref int count, ref bool isCountActive)
         {
+            if (cell is CellNode)
+            {
+                isCountActive = false;
+                return;
+            }
+            
             if (isCountActive)
             {
                 isCountActive = CheckAxisCell(
@@ -145,29 +174,28 @@ namespace GridField
             return count;
         }
 
-        private int CheckCellNeighbours(GridCell cell)
+        private int[] CheckCellNeighbours<T>(GridCell cell, List<T> listToCheck) where T : GridCell
         {
-            int upperNeighbours = CheckUnderSide(cell);
-
-            int underNeighbours = CheckUpperSide(cell);
-            int rightNeighbours = CheckRightSide(cell);
-
-            int leftNeighbours = CheckLeftSide(cell);
-
-            int count = leftNeighbours + rightNeighbours + underNeighbours + upperNeighbours;
-            return count;
+            int[] sidesValues = new int[4];
+            
+            sidesValues[0] = CheckUpperSide(cell, listToCheck);
+            sidesValues[1]  = CheckRightSide(cell, listToCheck);
+            sidesValues[2]  = CheckUnderSide(cell, listToCheck);
+            sidesValues[3]  = CheckLeftSide(cell, listToCheck);
+            
+            return sidesValues;
         }
 
-        private int CheckUnderSide(GridCell cell)
+        private int CheckUnderSide<T>(GridCell cell, List<T> listToCheck) where T : GridCell
         {
             int step = 1;
             int count = 0;
             bool isCountActive = true;
             GridCell previousCell = cell;
 
-            for (int index = Cells.Count - 1; index >= 0; index--)
+            for (int index = listToCheck.Count - 1; index >= 0; index--)
             {
-                GridCell currentCell = Cells[index];
+                GridCell currentCell = listToCheck[index];
 
                 if ((int)currentCell.Coordinates.y != (int)cell.Coordinates.y)
                 {
@@ -231,7 +259,7 @@ namespace GridField
             previousCell.CellConnectionProvider.ConnectionSetActive(setActive, previousSide, currentNodeType);
         }
 
-        private int CheckLeftSide(GridCell cell)
+        private int CheckLeftSide<T>(GridCell cell, List<T> listToCheck) where T : GridCell
         {
             int count = 0;
             int step = 1;
@@ -240,9 +268,9 @@ namespace GridField
 
             GridCell previousCell = cell;
 
-            for (int index = Cells.Count - 1; index >= 0; index--)
+            for (int index = listToCheck.Count - 1; index >= 0; index--)
             {
-                GridCell currentCell = Cells[index];
+                GridCell currentCell = listToCheck[index];
 
                 if ((int)currentCell.Coordinates.x != (int)cell.Coordinates.x)
                 {
@@ -275,7 +303,7 @@ namespace GridField
             return count;
         }
 
-        private int CheckRightSide(GridCell cell)
+        private int CheckRightSide<T>(GridCell cell, List<T> listToCheck) where T : GridCell
         {
             int count = 0;
             int step = 1;
@@ -284,7 +312,7 @@ namespace GridField
 
             GridCell previousCell = cell;
 
-            foreach (GridCell currentCell in Cells)
+            foreach (T currentCell in listToCheck)
             {
                 if ((int)currentCell.Coordinates.x != (int)cell.Coordinates.x)
                 {
@@ -320,8 +348,7 @@ namespace GridField
 
 
         private bool CheckAxisCell(CellType cellType, CellType currentNodeType, int currentCellCoordinate,
-            int cellCoordinate,
-            int step = 1)
+            int cellCoordinate, int step = 1)
         {
             if (cellType != currentNodeType && cellType != CellType.universal) return false;
 

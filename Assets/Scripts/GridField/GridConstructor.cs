@@ -267,7 +267,7 @@ namespace GridField
                                 CellType.universal);
                             break;
                         case CellType.counting:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellCountingPrefab, Cells,
+                            ConfigureCell<CountingCell>(lvl, i, j, count, _cellCountingPrefab, CountingCells,
                                 CellType.counting);
                             break;
                     }
