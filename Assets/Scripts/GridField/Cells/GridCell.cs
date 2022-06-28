@@ -10,8 +10,8 @@ namespace GridField.Cells
         [HideInInspector] public Vector2 Coordinates;
         [HideInInspector] public CellSide[] UnactiveSides = new CellSide[4];
         [HideInInspector] public Grid GridData;
-        [HideInInspector]public int Capacity;
-        public CellType CellType { get; set; }
+        [HideInInspector] public int Capacity;
+        public CellType CellType;
 
 
         public event Action<GridCell> OnVisualizationChanged;

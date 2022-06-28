@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GridField.Cells.Cell_Modifiers
 {
-    public class RotatingCellModifier : MonoBehaviour, ICellModifier
+    public class RotatingCellModifier : MonoBehaviour
     {
         [SerializeField] private RotationTrigger _rotationTrigger;
         [SerializeField] private GameObject _placeholderVisualization;
@@ -20,13 +20,13 @@ namespace GridField.Cells.Cell_Modifiers
         private void OnEnable()
         {
             _rotationTrigger.OnRotationTriggerActivated += RotateUnactiveSides;
-            _rotationTrigger.OnRotationTriggerActivated += RotateVisualization;
+            //_rotationTrigger.OnRotationTriggerActivated += RotateVisualization;
         }
 
         private void OnDisable()
         {
             _rotationTrigger.OnRotationTriggerActivated -= RotateUnactiveSides;
-            _rotationTrigger.OnRotationTriggerActivated -= RotateVisualization;
+            //_rotationTrigger.OnRotationTriggerActivated -= RotateVisualization;
         }
 
         private void RotateUnactiveSides()
@@ -49,6 +49,8 @@ namespace GridField.Cells.Cell_Modifiers
                     _cellType.UnactiveSides[i] = (CellSide)1;
                 }
             }
+            RotateVisualization();
+            _cellType.SendVisualizationChanged();
         }
 
         private void RotateVisualization()
@@ -58,8 +60,6 @@ namespace GridField.Cells.Cell_Modifiers
             var newRotation = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z - 90);
 
             _placeholderVisualization.transform.rotation = Quaternion.Euler(newRotation);
-
-            _cellType.SendVisualizationChanged();
         }
     }
 }

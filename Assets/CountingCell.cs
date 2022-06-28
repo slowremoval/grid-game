@@ -8,35 +8,35 @@ public class CountingCell : SimpleCell
 {
     [SerializeField] private Text _text;
 
-    [SerializeField] private int[] NeighboursOnSides = new int[4];
-    [SerializeField] private int[] NeighboursOnSidesReserve = new int[4];
+    private int[] _neighboursOnSides = new int[4];
+    private int[] _neighboursOnSidesAround = new int[4];
 
-    public int GetFullCapacity() => NeighboursOnSidesReserve.Sum();
+    public int GetFullCapacity() => _neighboursOnSidesAround.Sum();
 
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
+        SendVisualizationChanged();
         UpdateVisualization();
     }
 
-    public void UpdateVisualization() => _text.text = NeighboursOnSides.Sum().ToString();
+    public void UpdateVisualization() => _text.text = _neighboursOnSides.Sum().ToString();
 
     public void ArrayToSIdesValues(int[] neighboursOnSides,
         bool isComparing = false)
     {
-        for (int i = 0; i < NeighboursOnSides.Length; i++)
+        for (int i = 0; i < _neighboursOnSides.Length; i++)
         {
             if (isComparing)
             {
                 if (neighboursOnSides[i] != 0)
                 {
-                    NeighboursOnSides[i] = neighboursOnSides[i];
+                    _neighboursOnSides[i] = neighboursOnSides[i];
                 }
             }
             else
             {
-                NeighboursOnSides[i] = neighboursOnSides[i];
-                NeighboursOnSidesReserve[i] = neighboursOnSides[i];
+                _neighboursOnSidesAround[i] = neighboursOnSides[i];
             }
         }
     }

@@ -103,7 +103,9 @@
       <workItem from="1656072122541" duration="397000" />
       <workItem from="1656357077466" duration="306000" />
       <workItem from="1656397099684" duration="2907000" />
-      <workItem from="1656415906847" duration="509000" />
+      <workItem from="1656415906847" duration="1376000" />
+      <workItem from="1656438472033" duration="2246000" />
+      <workItem from="1656445920588" duration="8214000" />
     </task>
     <servers />
   </component>
@@ -115,24 +117,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GridField/Grid.cs</url>
-          <line>61</line>
-          <properties documentPath="E:\UnityProjects\grid-git\Assets\Scripts\GridField\Grid.cs" initialLine="39" containingFunctionPresentation="method 'RecalculateCountingCellsNeighbours'">
-            <startOffsets>
-              <option value="1841" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1897" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

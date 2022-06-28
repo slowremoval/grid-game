@@ -10,6 +10,11 @@ namespace GridField.Cells
         stableDark,
         stableLight,
         universal,
-        counting
+        counting,
+        universalRotating,
+        lightStableRotating,
+        darkStableRotating,
+        lightNodeRotating,
+        darkNodeRotating,
     }
 }

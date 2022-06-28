@@ -20,6 +20,11 @@ public class CellConnection : MonoBehaviour
     {
         StopAllCoroutines();
         SetColor(type);
+        TryInitializeImage();
+        if (_visualizationImage == null)
+        {
+            return;
+        }
         _visualizationImage.color = _color;
         StartCoroutine(UpscaleConnectionRoutine(gameObject, Vector3.one * 1.1f, 8f));
     }

@@ -37,7 +37,8 @@ namespace GridField.Cells
             return UnactiveSides[sideNumber - 1] == 0;
         }
 
-        private void SideSetActive(int sideNumber, bool setActive) => _unactiveSidesMarkers[sideNumber - 1].SetActive(setActive);
+        private void SideSetActive(int sideNumber, bool setActive) =>
+            _unactiveSidesMarkers[sideNumber - 1].SetActive(setActive);
 
         public void ShowUnactiveSides()
         {
@@ -49,7 +50,7 @@ namespace GridField.Cells
                 }
             }
         }
-        
+
         public bool ChangeLeftSideState() => SideSetActive((int)CellSide.left);
         public bool ChangeRightSideState() => SideSetActive((int)CellSide.right);
         public bool ChangeUpperSideState() => SideSetActive((int)CellSide.top);
@@ -117,12 +118,10 @@ namespace GridField.Cells
                     _color.a = 0.81f;
                     _textMeshProUGUI.text += $"\n_{CellCapacity}";
                     break;
-
                 case CellType.simple:
                     _color = Color.white;
                     _color.a = 0.9f;
                     break;
-
                 case CellType.rotating:
                     _color = Color.green;
                     _color.a = 0.9f;
@@ -142,6 +141,10 @@ namespace GridField.Cells
                 case CellType.counting:
                     _color = Color.red;
                     _color.a = 0.7f;
+                    break;
+                default: 
+                    _color = Color.magenta;
+                    _color.a = 1;
                     break;
             }
         }
@@ -211,6 +214,41 @@ namespace GridField.Cells
         public void SetCountingCell()
         {
             ThisCellType = CellType.counting;
+            CellCapacity = 0;
+            UpdateCellVisualization();
+        }
+
+        public void SetUniversalRotatingCell()
+        {
+            ThisCellType = CellType.universalRotating;
+            CellCapacity = 1;
+            UpdateCellVisualization();
+        }
+
+        public void SetStableDarkRotatingCell()
+        {
+            ThisCellType = CellType.darkStableRotating;
+            CellCapacity = 1;
+            UpdateCellVisualization();
+        }
+
+        public void SetStableLightRotatingCell()
+        {
+            ThisCellType = CellType.lightStableRotating;
+            CellCapacity = 1;
+            UpdateCellVisualization();
+        }
+
+        public void SetDarkNodeRotatingCell()
+        {
+            ThisCellType = CellType.darkNodeRotating;
+            CellCapacity = 0;
+            UpdateCellVisualization();
+        }
+
+        public void SetLightNodeRotatingCell()
+        {
+            ThisCellType = CellType.lightNodeRotating;
             CellCapacity = 0;
             UpdateCellVisualization();
         }

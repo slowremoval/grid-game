@@ -19,8 +19,9 @@ namespace GridField
         [SerializeField] private GameObject _cellEmptyPrefab;
         [SerializeField] private GameObject _cellRotatingPrefab;
         [SerializeField] private GameObject _cellStablePrefab;
-        [SerializeField] private GameObject _cellUniversalPrefab;
         [SerializeField] private GameObject _cellCountingPrefab;
+        [SerializeField] private GameObject _cellStaticRotatingPrefab;
+        [SerializeField] private GameObject _cellNodeRotatingPrefab;
 
         [Space] [SerializeField] private string _levelName;
 
@@ -124,21 +125,15 @@ namespace GridField
         {
             foreach (GridCell cell in Cells)
             {
-                if (cell is SimpleCell simpleCell)
-                {
-                    simpleCell.OnVisualizationChanged -= base.RecalculateNeighbourAxises;
-                }
+                cell.OnVisualizationChanged -= base.RecalculateNeighbourAxises;
             }
         }
 
         private void SubscribeToSimpleCellsChanging()
         {
-            foreach (GridCell cell in Cells)
+            foreach (GridCell cell in _activeGridElements)
             {
-                if (cell is SimpleCell simpleCell)
-                {
-                    simpleCell.OnVisualizationChanged += base.RecalculateNeighbourAxises;
-                }
+                cell.OnVisualizationChanged += base.RecalculateNeighbourAxises;
             }
         }
 
@@ -263,12 +258,31 @@ namespace GridField
                                 CellType.stableLight);
                             break;
                         case CellType.universal:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellUniversalPrefab, Cells,
+                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStablePrefab, Cells,
                                 CellType.universal);
                             break;
                         case CellType.counting:
                             ConfigureCell<CountingCell>(lvl, i, j, count, _cellCountingPrefab, CountingCells,
                                 CellType.counting);
+                            break;
+                        case CellType.universalRotating:
+                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStaticRotatingPrefab, Cells, CellType.universal);
+                            break;
+                        case CellType.darkStableRotating:
+                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStaticRotatingPrefab, Cells,
+                                CellType.stableDark);
+                            break;
+                        case CellType.lightStableRotating:
+                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStaticRotatingPrefab, Cells,
+                                CellType.stableLight);
+                            break;
+                        case CellType.darkNodeRotating:
+                            ConfigureCell<CellNode>(lvl, i, j, count, _cellNodeRotatingPrefab, Nodes,
+                                CellType.dark);
+                            break;
+                        case CellType.lightNodeRotating:
+                            ConfigureCell<CellNode>(lvl, i, j, count, _cellNodeRotatingPrefab, Nodes,
+                                CellType.light);
                             break;
                     }
 
@@ -294,7 +308,7 @@ namespace GridField
 
             foreach (var node in Nodes)
             {
-                CheckNeighbours(node);
+                CheckNeighbours(node, Cells);
             }
         }
 
@@ -338,6 +352,10 @@ namespace GridField
                 return;
             }
 
+            Nodes = new List<CellNode>();
+            CountingCells = new List<CountingCell>();
+            Cells = new List<GridCell>();
+            
             foreach (var cell in _allGridElements)
             {
                 Destroy(cell.gameObject);
