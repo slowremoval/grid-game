@@ -12,10 +12,7 @@ public class PlaceholderConnectionProvider : MonoBehaviour
     [Header("Placeholder connections")] [Space] [SerializeField]
     private List<GameObject> _placeholderConnections;
 
-    private void Start()
-    {
-        ShowGridPlaceholderConnections();
-    }
+    private void Start() => ShowGridPlaceholderConnections();
 
     private void ShowGridPlaceholderConnections()
     {
@@ -50,5 +47,4 @@ public class PlaceholderConnectionProvider : MonoBehaviour
                     Time.deltaTime * _connectionScaleSpeed);
         }
     }
-
 }

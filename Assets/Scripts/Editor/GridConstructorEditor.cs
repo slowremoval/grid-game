@@ -7,6 +7,8 @@ namespace Editor
     [CustomEditor(typeof(GridConstructor))]
     public class GridConstructorEditor : UnityEditor.Editor
     {
+        private int _buttonHeight = 37;
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -21,7 +23,7 @@ namespace Editor
 
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-        
+
             if (SaveLevelButton(builder)) return;
 
             if (StartLevelButton(builder)) return;
@@ -29,10 +31,10 @@ namespace Editor
             GUILayout.EndHorizontal();
         }
 
-        private static bool StartLevelButton(GridConstructor builder)
+        private bool StartLevelButton(GridConstructor builder)
         {
             GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Start Level", GUILayout.Height(37)))
+            if (GUILayout.Button("Start Level", GUILayout.Height(_buttonHeight)))
             {
                 if (Application.isPlaying == false)
                 {
@@ -45,10 +47,10 @@ namespace Editor
             return false;
         }
 
-        private static bool SaveLevelButton(GridConstructor builder)
+        private bool SaveLevelButton(GridConstructor builder)
         {
             GUI.backgroundColor = Color.green;
-            if (GUILayout.Button("Save Level", GUILayout.Height(37)))
+            if (GUILayout.Button("Save Level", GUILayout.Height(_buttonHeight)))
             {
                 if (Application.isPlaying == false)
                 {
@@ -61,10 +63,10 @@ namespace Editor
             return false;
         }
 
-        private static bool StartSaveRedactingButton(GridConstructor builder)
+        private bool StartSaveRedactingButton(GridConstructor builder)
         {
             GUI.backgroundColor = Color.cyan;
-            if (GUILayout.Button("Start Save Redacting", GUILayout.Height(37)))
+            if (GUILayout.Button("Start Save Redacting", GUILayout.Height(_buttonHeight)))
             {
                 if (Application.isPlaying == false)
                 {
@@ -77,10 +79,10 @@ namespace Editor
             return false;
         }
 
-        private static bool StartGrinBuildingButton(GridConstructor builder)
+        private bool StartGrinBuildingButton(GridConstructor builder)
         {
             GUI.backgroundColor = Color.yellow;
-            if (GUILayout.Button("Start Grid Building", GUILayout.Height(37)))
+            if (GUILayout.Button("Start Grid Building", GUILayout.Height(_buttonHeight)))
             {
                 if (Application.isPlaying == false)
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GridField.Cells;
@@ -9,38 +10,62 @@ namespace GridField
     {
         [HideInInspector] public List<CellNode> Nodes;
         [HideInInspector] public List<GridCell> Cells;
-        [HideInInspector] public List<CountingCell> CountingCells;
+        public List<CountingCell> CountingCells;
 
         public GridCell[,] _allGridElements;
         public List<GridCell> _activeGridElements;
 
 
-        private List<CellNode> currentNodes;
+        private List<CellNode> _currentNodes;
 
         #region NodeNeighbours
 
-        public void RecalculateNeighbourAxises(GridCell gridCell)
+        protected void RecalculateNeighbourAxises(GridCell gridCell)
         {
             DeactivateVerticalAndHorizontalConnections(gridCell);
 
             FindCurrentNodes(gridCell);
 
-            RecalculateCountingCellsNeighbours();
-            
+            RecalculateCountingCellsNeighbours(Cells, false);
+
+            RecalculateCountingCellsNeighbours(_activeGridElements, true);
+
+            CheckCountingChains();
+
             RecalculateNodesNeighbours();
         }
 
-        private void RecalculateCountingCellsNeighbours()
+        private void CheckCountingChains()
         {
             foreach (CountingCell countingCell in CountingCells)
             {
-                CheckNeighbours(countingCell, Cells);
+                CheckNeighbourCountingCells(countingCell);
+            }
+        }
+
+        private void CheckNeighbourCountingCells(CountingCell countingCell)
+        {
+            foreach (CountingCell cell in CountingCells)
+            {
+                if (countingCell.Coordinates != cell.Coordinates &&
+                    ((int)countingCell.Coordinates.y == (int)cell.Coordinates.y ||
+                     (int)countingCell.Coordinates.x == (int)cell.Coordinates.x))
+                {
+                }
+            }
+        }
+
+        private void RecalculateCountingCellsNeighbours<T>(List<T> listToCheck, bool isComparing) where T : GridCell
+        {
+            foreach (CountingCell countingCell in CountingCells)
+            {
+                CheckNeighbours(countingCell, listToCheck, isComparing);
             }
         }
 
         private void RecalculateNodesNeighbours()
         {
-            foreach (CellNode node in currentNodes)
+            foreach (CellNode node in _currentNodes)
             {
                 CheckNeighbours(node);
             }
@@ -48,17 +73,18 @@ namespace GridField
 
         protected void CheckNeighbours(CellNode node)
         {
-            int[] neighboursCount = CheckCellNeighbours(node, _activeGridElements);
+            int[] neighboursCount = CheckCellNeighbours(node, Cells);
 
             node.CurrentAmount = neighboursCount.Sum();
 
             node.UpdateVisualization();
         }
-        protected void CheckNeighbours<T>(CountingCell cell, List<T> listToCheck) where T : GridCell
+
+        private void CheckNeighbours<T>(CountingCell cell, List<T> listToCheck, bool isComparing) where T : GridCell
         {
             int[] neighboursCount = CheckCellNeighbours(cell, listToCheck);
 
-            cell.ArrayToSIdesValues(neighboursCount);
+            cell.ArrayToSIdesValues(neighboursCount, isComparing);
 
             cell.UpdateVisualization();
         }
@@ -88,14 +114,14 @@ namespace GridField
 
         private void FindCurrentNodes(GridCell gridCell)
         {
-            currentNodes = new List<CellNode>();
+            _currentNodes = new List<CellNode>();
 
             foreach (CellNode node in Nodes)
             {
                 if ((int)node.Coordinates.x == (int)gridCell.Coordinates.x ||
                     (int)node.Coordinates.y == (int)gridCell.Coordinates.y)
                 {
-                    currentNodes.Add(node);
+                    _currentNodes.Add(node);
                 }
             }
         }
@@ -144,12 +170,12 @@ namespace GridField
             int currentCellCoordinates, int step, GridCell previousCell,
             ref int count, ref bool isCountActive)
         {
-            if (cell is CellNode)
+            if (currentCell is CellNode)
             {
                 isCountActive = false;
                 return;
             }
-            
+
             if (isCountActive)
             {
                 isCountActive = CheckAxisCell(
@@ -159,30 +185,36 @@ namespace GridField
                     step);
             }
 
+
             if (isCountActive)
             {
                 count = IncrementCounter(count, currentCell, ref isCountActive);
-
                 ConnectionBetweenCellsSetActive(cell.CellType, currentCell, previousCell, true);
             }
         }
 
         private int IncrementCounter(int count, GridCell cell, ref bool isCountActive)
         {
-            count += cell.Capacity;
+            if (cell is CountingCell countingCell)
+            {
+                isCountActive = false;
+                return countingCell.GetFullCapacity();
+            }
 
+            count += cell.Capacity;
             return count;
         }
 
-        private int[] CheckCellNeighbours<T>(GridCell cell, List<T> listToCheck) where T : GridCell
+        private int[] CheckCellNeighbours<T>(GridCell cell, List<T> listToCheck)
+            where T : GridCell
         {
             int[] sidesValues = new int[4];
-            
+
             sidesValues[0] = CheckUpperSide(cell, listToCheck);
-            sidesValues[1]  = CheckRightSide(cell, listToCheck);
-            sidesValues[2]  = CheckUnderSide(cell, listToCheck);
-            sidesValues[3]  = CheckLeftSide(cell, listToCheck);
-            
+            sidesValues[1] = CheckRightSide(cell, listToCheck);
+            sidesValues[2] = CheckUnderSide(cell, listToCheck);
+            sidesValues[3] = CheckLeftSide(cell, listToCheck);
+
             return sidesValues;
         }
 
@@ -231,11 +263,20 @@ namespace GridField
         private void ConnectionBetweenCellsSetActive(CellType currentNodeType, GridCell simpleCell,
             GridCell previousCell, bool setActive)
         {
+            int cellSideMemberCount = Enum.GetNames(typeof(CellSide)).Length;
+
+            CellSide previousSide = GetPreviousCellPosition(simpleCell, previousCell);
+
+            CellSide currentSide =
+                (int)(previousSide + 2) < cellSideMemberCount ? (previousSide + 2) : (previousSide - 2);
+
+            simpleCell.CellConnectionProvider.ConnectionSetActive(setActive, currentSide, currentNodeType);
+            previousCell.CellConnectionProvider.ConnectionSetActive(setActive, previousSide, currentNodeType);
+        }
+
+        private CellSide GetPreviousCellPosition(GridCell simpleCell, GridCell previousCell)
+        {
             CellSide previousSide;
-            CellSide currentSide;
-
-            int cellSideMemberCount = CellSide.GetNames(typeof(CellSide)).Length;
-
             if (previousCell.Coordinates.y < simpleCell.Coordinates.y)
             {
                 previousSide = CellSide.right;
@@ -253,10 +294,7 @@ namespace GridField
                 previousSide = CellSide.top;
             }
 
-            currentSide = (int)(previousSide + 2) < cellSideMemberCount ? (previousSide + 2) : (previousSide - 2);
-
-            simpleCell.CellConnectionProvider.ConnectionSetActive(setActive, currentSide, currentNodeType);
-            previousCell.CellConnectionProvider.ConnectionSetActive(setActive, previousSide, currentNodeType);
+            return previousSide;
         }
 
         private int CheckLeftSide<T>(GridCell cell, List<T> listToCheck) where T : GridCell
@@ -350,6 +388,8 @@ namespace GridField
         private bool CheckAxisCell(CellType cellType, CellType currentNodeType, int currentCellCoordinate,
             int cellCoordinate, int step = 1)
         {
+            if (currentNodeType == CellType.simple || cellType == CellType.counting) return false;
+
             if (cellType != currentNodeType && cellType != CellType.universal) return false;
 
             if (currentCellCoordinate == cellCoordinate) return false;

@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 62599894679784840}
   - component: {fileID: 2429028332322120604}
   - component: {fileID: 7691520063319575492}
+  - component: {fileID: 943900709579451295}
   m_Layer: 5
   m_Name: UICellRotating
   m_TagString: Untagged
@@ -352,17 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d37b1e5d194a4097ae830e5b8f9aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Coordinates: {x: 0, y: 0}
-  UnactiveSides: 
-  Capacity: 0
-  CellConnectionProvider: {fileID: 7691520063319575492}
-  GridData: {fileID: 0}
-  _visualization: {fileID: 1229581908279175616}
-  _defaultColor: {r: 0.6698113, g: 0.36334103, b: 0.36334103, a: 1}
-  _firstColor: {r: 0.99215686, g: 0.84313726, b: 0.11764706, a: 1}
-  _secondColor: {r: 0.16862746, g: 0.16862746, b: 0.16862746, a: 1}
   _rotationTrigger: {fileID: 7917287739778462261}
   _placeholderVisualization: {fileID: 2617538409074662407}
+  _cellType: {fileID: 943900709579451295}
 --- !u!114 &2429028332322120604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a759422ecddc649a6e96e5eb1c3abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cell: {fileID: 62599894679784840}
+  _cell: {fileID: 943900709579451295}
   _placeholderConnections:
   - {fileID: 2962516704933401132}
   - {fileID: 3374818063454377104}
@@ -398,6 +391,27 @@ MonoBehaviour:
   - {fileID: 1685852598786682059}
   - {fileID: 7973815341418354951}
   - {fileID: 2116904379508350355}
+--- !u!114 &943900709579451295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564913576499885117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817acafd6b2b4bd4b23507d8790ea993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Coordinates: {x: 0, y: 0}
+  UnactiveSides: 00000000000000000000000000000000
+  Capacity: 1
+  CellConnectionProvider: {fileID: 7691520063319575492}
+  GridData: {fileID: 0}
+  _visualization: {fileID: 1229581908279175616}
+  _defaultColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+  _firstColor: {r: 1, g: 0.8135679, b: 0, a: 1}
+  _secondColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
 --- !u!1 &2324603811168505600
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +565,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2617538409074662407}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

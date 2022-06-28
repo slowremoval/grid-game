@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace GridField.Cells
@@ -7,18 +6,8 @@ namespace GridField.Cells
     public class CellNode : StableCell
     {
         [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
-
-
+        
         [HideInInspector] public int CurrentAmount;
-
-       private void Start()
-        {
-            if (_textMeshProUGUI == null)
-            {
-                return;
-            }
-            UpdateVisualization();
-        }
 
         public void UpdateVisualization()
         {
@@ -28,7 +17,16 @@ namespace GridField.Cells
 
         private void ShowNodeRequirements(int currentAmount)
         {
-            _textMeshProUGUI.text = $"{currentAmount}/{Capacity}";
+            _textMeshProUGUI.text = $"{currentAmount}\n{Capacity}";
+        }
+
+        private void Start()
+        {
+            if (_textMeshProUGUI == null)
+            {
+                return;
+            }
+            UpdateVisualization();
         }
     }
 }

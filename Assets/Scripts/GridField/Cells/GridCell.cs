@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using GridField.Cells.Cell_Modifiers;
 using UnityEngine;
 
 namespace GridField.Cells
@@ -7,14 +9,16 @@ namespace GridField.Cells
     {
         [HideInInspector] public Vector2 Coordinates;
         [HideInInspector] public CellSide[] UnactiveSides = new CellSide[4];
+        [HideInInspector] public Grid GridData;
+        [HideInInspector]public int Capacity;
         public CellType CellType { get; set; }
 
-        [HideInInspector] public int Capacity;
+
+        public event Action<GridCell> OnVisualizationChanged;
 
         public CellConnectionProvider CellConnectionProvider;
 
-        [HideInInspector] public Grid GridData;
-
+        public void SendVisualizationChanged() => OnVisualizationChanged?.Invoke(this);
         public void InitializeGrid() => UnactiveSides = new CellSide[4];
 
         public void SetSidesProperties(Vector4 vector4, GridCell cell)
@@ -29,22 +33,10 @@ namespace GridField.Cells
             }
         }
 
-        private int[] Vector4ToArray(Vector4 vector4)
-        {
-            int[] vector4ToArray = new int [4];
-
-            vector4ToArray[0] = (int)vector4.x;
-            vector4ToArray[1] = (int)vector4.y;
-            vector4ToArray[2] = (int)vector4.z;
-            vector4ToArray[3] = (int)vector4.w;
-
-            return vector4ToArray;
-        }
-
         public bool[] HasNeighbours()
         {
             bool[] neighbours = new bool[4];
-            RotatingCell rotating = default;
+            RotatingCellModifier rotating = default;
 
             if ((int)Coordinates.x < GridData._allGridElements.GetLength(0) - 1 &&
                 !GridData._allGridElements[(int)Coordinates.x + 1, (int)Coordinates.y]
@@ -53,7 +45,7 @@ namespace GridField.Cells
                 GridData._allGridElements[(int)Coordinates.x + 1, (int)Coordinates.y]
                     .TryGetComponent<GridCell>(out var right);
                 GridData._allGridElements[(int)Coordinates.x + 1, (int)Coordinates.y]
-                    .TryGetComponent<RotatingCell>(out rotating);
+                    .TryGetComponent<RotatingCellModifier>(out rotating);
 
                 if (rotating == default)
                 {
@@ -77,7 +69,7 @@ namespace GridField.Cells
                 GridData._allGridElements[(int)Coordinates.x - 1, (int)Coordinates.y]
                     .TryGetComponent<GridCell>(out var right);
                 GridData._allGridElements[(int)Coordinates.x - 1, (int)Coordinates.y]
-                    .TryGetComponent<RotatingCell>(out rotating);
+                    .TryGetComponent<RotatingCellModifier>(out rotating);
 
                 if (rotating == default)
                 {
@@ -101,7 +93,7 @@ namespace GridField.Cells
                 GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y - 1]
                     .TryGetComponent<GridCell>(out var right);
                 GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y - 1]
-                    .TryGetComponent<RotatingCell>(out rotating);
+                    .TryGetComponent<RotatingCellModifier>(out rotating);
 
                 if (rotating == default)
                 {
@@ -126,7 +118,7 @@ namespace GridField.Cells
                 GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y + 1]
                     .TryGetComponent<GridCell>(out var right);
                 GridData._allGridElements[(int)Coordinates.x, (int)Coordinates.y + 1]
-                    .TryGetComponent<RotatingCell>(out rotating);
+                    .TryGetComponent<RotatingCellModifier>(out rotating);
 
                 if (rotating == default)
                 {
@@ -145,6 +137,18 @@ namespace GridField.Cells
             }
 
             return neighbours;
+        }
+
+        private int[] Vector4ToArray(Vector4 vector4)
+        {
+            int[] vector4ToArray = new int [4];
+
+            vector4ToArray[0] = (int)vector4.x;
+            vector4ToArray[1] = (int)vector4.y;
+            vector4ToArray[2] = (int)vector4.z;
+            vector4ToArray[3] = (int)vector4.w;
+
+            return vector4ToArray;
         }
     }
 }

@@ -126,7 +126,7 @@ namespace GridField
             {
                 if (cell is SimpleCell simpleCell)
                 {
-                    simpleCell.OnColorChanged -= base.RecalculateNeighbourAxises;
+                    simpleCell.OnVisualizationChanged -= base.RecalculateNeighbourAxises;
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace GridField
             {
                 if (cell is SimpleCell simpleCell)
                 {
-                    simpleCell.OnColorChanged += base.RecalculateNeighbourAxises;
+                    simpleCell.OnVisualizationChanged += base.RecalculateNeighbourAxises;
                 }
             }
         }

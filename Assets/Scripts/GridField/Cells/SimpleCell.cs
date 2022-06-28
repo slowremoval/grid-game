@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,28 +11,17 @@ namespace GridField.Cells
         [SerializeField] protected Color _defaultColor;
         [SerializeField] protected Color _firstColor;
         [SerializeField] protected Color _secondColor;
-
-
-        protected Image _cellImage;
         
-        public event Action<GridCell> OnColorChanged;
+        private Image _cellImage;
+        
+        public void InitializeCellImage() => _cellImage = _visualization.GetComponent<Image>();
 
-        private void Start()
-        {
-            InitializeCellImage();
-        }
+        public override void OnPointerDown(PointerEventData eventData) => SetColorByClick();
 
-        protected void InitializeCellImage()
-        {
-            _cellImage = _visualization.GetComponent<Image>();
-        }
+        private void Start() => InitializeCellImage();
+        
 
-        public override void OnPointerDown(PointerEventData eventData)
-        {
-            SetColorByClick();
-        }
-
-        protected void SetColorByClick()
+        private void SetColorByClick()
         {
             if (Input.GetMouseButton(0))
             {
@@ -65,6 +53,5 @@ namespace GridField.Cells
             SendVisualizationChanged();
         }
 
-        public void SendVisualizationChanged() => OnColorChanged?.Invoke(this);
     }
 }
