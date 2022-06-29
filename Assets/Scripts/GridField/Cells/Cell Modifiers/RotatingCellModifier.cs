@@ -17,21 +17,13 @@ namespace GridField.Cells.Cell_Modifiers
             }
         }
 
-        private void OnEnable()
-        {
-            _rotationTrigger.OnRotationTriggerActivated += RotateUnactiveSides;
-            //_rotationTrigger.OnRotationTriggerActivated += RotateVisualization;
-        }
+        private void OnEnable() => _rotationTrigger.OnRotationTriggerActivated += RotateUnactiveSides;
 
-        private void OnDisable()
-        {
-            _rotationTrigger.OnRotationTriggerActivated -= RotateUnactiveSides;
-            //_rotationTrigger.OnRotationTriggerActivated -= RotateVisualization;
-        }
+        private void OnDisable() => _rotationTrigger.OnRotationTriggerActivated -= RotateUnactiveSides;
 
         private void RotateUnactiveSides()
         {
-            int CellSideMemberCount = Enum.GetNames(typeof(CellSide)).Length;
+            int cellSideMemberCount = Enum.GetNames(typeof(CellSide)).Length;
 
             for (int i = 0; i < _cellType.UnactiveSides.Length; i++)
             {
@@ -40,7 +32,7 @@ namespace GridField.Cells.Cell_Modifiers
                     continue;
                 }
 
-                if ((int)_cellType.UnactiveSides[i] < CellSideMemberCount - 1)
+                if ((int)_cellType.UnactiveSides[i] < cellSideMemberCount - 1)
                 {
                     _cellType.UnactiveSides[i] = (CellSide)_cellType.UnactiveSides[i] + 1;
                 }

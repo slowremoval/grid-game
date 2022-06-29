@@ -821,8 +821,14 @@ MonoBehaviour:
   GridData: {fileID: 0}
   Capacity: 0
   CellType: 0
+  _defaultColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
+  _lightColor: {r: 0.9008031, g: 1, b: 0, a: 1}
+  _darkColor: {r: 0.3584906, g: 0.3060698, b: 0.3060698, a: 1}
   CellConnectionProvider: {fileID: 1451034754184140281}
   _visualization: {fileID: 7682892370854985592}
+  _stableLightColor: {r: 1, g: 0.7716291, b: 0, a: 1}
+  _stableDarkColor: {r: 0.2830189, g: 0.1294945, b: 0.1294945, a: 1}
+  _universalColor: {r: 0.42262527, g: 0.5566038, b: 0.29142934, a: 1}
 --- !u!1 &1548439136093505933
 GameObject:
   m_ObjectHideFlags: 0

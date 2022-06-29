@@ -748,6 +748,9 @@ MonoBehaviour:
   CellType: 0
   CellConnectionProvider: {fileID: 7224215252593587728}
   _visualization: {fileID: 1944869988325547153}
+  _stableLightColor: {r: 1, g: 0.77254903, b: 0, a: 1}
+  _stableDarkColor: {r: 0.5754717, g: 0.3936009, b: 0.3936009, a: 1}
+  _universalColor: {r: 0.42352942, g: 0.5568628, b: 0.2901961, a: 1}
   _textMeshProUGUI: {fileID: 5721408953335681950}
 --- !u!114 &6252398857080198705
 MonoBehaviour:

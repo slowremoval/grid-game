@@ -900,6 +900,9 @@ MonoBehaviour:
   CellType: 0
   CellConnectionProvider: {fileID: 1912169246651426644}
   _visualization: {fileID: 7220785606365760981}
+  _stableLightColor: {r: 1, g: 0.7716291, b: 0, a: 1}
+  _stableDarkColor: {r: 0.2830189, g: 0.1294945, b: 0.1294945, a: 1}
+  _universalColor: {r: 0.42262527, g: 0.5566038, b: 0.29142934, a: 1}
 --- !u!114 &772875627999049791
 MonoBehaviour:
   m_ObjectHideFlags: 0

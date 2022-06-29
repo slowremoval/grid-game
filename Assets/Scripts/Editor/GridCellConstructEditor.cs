@@ -13,6 +13,8 @@ namespace Editor
         private bool _underSideActive = true;
         private bool _upperSideActive = true;
 
+        private int _buttonHeight = 33;
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -39,7 +41,7 @@ namespace Editor
 
             SetLightNodeRotatingCell(constructor);
             SetDarkNodeRotatingCell(constructor);
-            
+
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
 
@@ -58,7 +60,7 @@ namespace Editor
 
             SetStableLightRotatingCell(constructor);
             SetStableDarkRotatingCell(constructor);
-            
+
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -80,16 +82,18 @@ namespace Editor
         }
 
         private void SetLightNodeRotatingCell(GridCellConstruct constructor)
-        {GUI.backgroundColor = Color.yellow;
-            if (GUILayout.Button("Ligh tNode Rotating", GUILayout.Height(33)))
+        {
+            GUI.backgroundColor = Color.yellow;
+            if (GUILayout.Button("Light Node Rotating", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetLightNodeRotatingCell();
             }
         }
 
         private void SetDarkNodeRotatingCell(GridCellConstruct constructor)
-        {GUI.backgroundColor = Color.grey;
-            if (GUILayout.Button("Dark Node Rotating", GUILayout.Height(33)))
+        {
+            GUI.backgroundColor = Color.grey;
+            if (GUILayout.Button("Dark Node Rotating", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetDarkNodeRotatingCell();
             }
@@ -98,7 +102,7 @@ namespace Editor
         private void SetStableLightRotatingCell(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Stable Light Rotating", GUILayout.Height(33)))
+            if (GUILayout.Button("Stable Light Rotating", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetStableLightRotatingCell();
             }
@@ -107,7 +111,7 @@ namespace Editor
         private void SetStableDarkRotatingCell(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.black;
-            if (GUILayout.Button("Stable Dark Rotating", GUILayout.Height(33)))
+            if (GUILayout.Button("Stable Dark Rotating", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetStableDarkRotatingCell();
             }
@@ -116,18 +120,9 @@ namespace Editor
         private void SetUniversalRotatingCell(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.red;
-            if (GUILayout.Button("Universal Rotating", GUILayout.Height(33)))
+            if (GUILayout.Button("Universal Rotating", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetUniversalRotatingCell();
-            }
-        }
-
-        private void SetCountingCellButton(GridCellConstruct constructor)
-        {
-            GUI.backgroundColor = Color.magenta;
-            if (GUILayout.Button("Counting Cell", GUILayout.Height(33)))
-            {
-                constructor.SetCountingCell();
             }
         }
 
@@ -151,7 +146,7 @@ namespace Editor
         {
             _leftSideActive = !constructor.UnactiveSides.Contains(CellSide.left);
             GUI.backgroundColor = _leftSideActive ? Color.green : Color.grey;
-            if (GUILayout.Button("Left Side", GUILayout.Height(33)))
+            if (GUILayout.Button("Left Side", GUILayout.Height(_buttonHeight)))
             {
                 constructor.ChangeLeftSideState();
             }
@@ -162,7 +157,7 @@ namespace Editor
             _rightSideActive = !constructor.UnactiveSides.Contains(CellSide.right);
             GUI.backgroundColor = _rightSideActive ? Color.green : Color.grey;
 
-            if (GUILayout.Button("Right Side", GUILayout.Height(33)))
+            if (GUILayout.Button("Right Side", GUILayout.Height(_buttonHeight)))
             {
                 constructor.ChangeRightSideState();
             }
@@ -173,7 +168,7 @@ namespace Editor
             _upperSideActive = !constructor.UnactiveSides.Contains(CellSide.top);
             GUI.backgroundColor = _upperSideActive ? Color.green : Color.grey;
 
-            if (GUILayout.Button("Upper Side", GUILayout.Height(33)))
+            if (GUILayout.Button("Upper Side", GUILayout.Height(_buttonHeight)))
             {
                 constructor.ChangeUpperSideState();
             }
@@ -185,7 +180,7 @@ namespace Editor
 
             GUI.backgroundColor = _underSideActive ? Color.green : Color.grey;
 
-            if (GUILayout.Button("Under Side", GUILayout.Height(33)))
+            if (GUILayout.Button("Under Side", GUILayout.Height(_buttonHeight)))
             {
                 constructor.ChangeUnderSideState();
             }
@@ -194,7 +189,7 @@ namespace Editor
         private void SetUniversalCellButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.red;
-            if (GUILayout.Button("Universal Cell", GUILayout.Height(33)))
+            if (GUILayout.Button("Universal Cell", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetUniversalCell();
             }
@@ -203,7 +198,7 @@ namespace Editor
         private void SetStableDarkButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.black;
-            if (GUILayout.Button("Stable Dark", GUILayout.Height(33)))
+            if (GUILayout.Button("Stable Dark", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetStableDarkCell();
             }
@@ -212,52 +207,52 @@ namespace Editor
         private void SetStableLightButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Stable Light", GUILayout.Height(33)))
+            if (GUILayout.Button("Stable Light", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetStableLightCell();
             }
         }
 
-        private static void SetRotatingCellButton(GridCellConstruct constructor)
+        private void SetRotatingCellButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.magenta;
-            if (GUILayout.Button("Rotating Cell", GUILayout.Height(33)))
+            if (GUILayout.Button("Rotating Cell", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetRotatingCell();
             }
         }
 
-        private static void SetEmptyCellButton(GridCellConstruct constructor)
+        private void SetEmptyCellButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.cyan;
-            if (GUILayout.Button("Empty Cell", GUILayout.Height(33)))
+            if (GUILayout.Button("Empty Cell", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetEmptyCell();
             }
         }
 
-        private static void SetSimpleCellButton(GridCellConstruct constructor)
+        private void SetSimpleCellButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.green;
-            if (GUILayout.Button("Simple Cell", GUILayout.Height(33)))
+            if (GUILayout.Button("Simple Cell", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetSimpleCell();
             }
         }
 
-        private static void SetDarkNodeButton(GridCellConstruct constructor)
+        private void SetDarkNodeButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.gray;
-            if (GUILayout.Button("Dark Node", GUILayout.Height(33)))
+            if (GUILayout.Button("Dark Node", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetDarkNode();
             }
         }
 
-        private static void SetLightNodeButton(GridCellConstruct constructor)
+        private void SetLightNodeButton(GridCellConstruct constructor)
         {
             GUI.backgroundColor = Color.yellow;
-            if (GUILayout.Button("Light Node", GUILayout.Height(33)))
+            if (GUILayout.Button("Light Node", GUILayout.Height(_buttonHeight)))
             {
                 constructor.SetLightNode();
             }
@@ -271,12 +266,14 @@ namespace Editor
                 GUILayout.BeginHorizontal();
                 for (int i = 0; i < 3; i++)
                 {
-                    if (GUILayout.Button(j.ToString(), GUILayout.Height(42)))
+                    if (GUILayout.Button(j.ToString(), GUILayout.Height(_buttonHeight)))
                     {
                         part.SetRequiredAmount(j);
 
                         if (part.ThisCellType != CellType.light &&
-                            part.ThisCellType != CellType.dark)
+                            part.ThisCellType != CellType.dark &&
+                            part.ThisCellType != CellType.darkNodeRotating &&
+                            part.ThisCellType != CellType.lightNodeRotating)
                         {
                             part.SetCellType(CellType.light);
                         }

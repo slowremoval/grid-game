@@ -10,8 +10,6 @@ namespace GridField
     {
         [HideInInspector] public List<CellNode> Nodes;
         [HideInInspector] public List<GridCell> Cells;
-        public List<CountingCell> CountingCells;
-
         public GridCell[,] _allGridElements;
         public List<GridCell> _activeGridElements;
 
@@ -26,19 +24,7 @@ namespace GridField
 
             FindCurrentNodes(gridCell);
 
-            RecalculateCountingCellsNeighbours(Cells, false);
-
-            RecalculateCountingCellsNeighbours(_activeGridElements, true);
-
             RecalculateNodesNeighbours();
-        }
-
-        private void RecalculateCountingCellsNeighbours<T>(List<T> listToCheck, bool isComparing) where T : GridCell
-        {
-            foreach (CountingCell countingCell in CountingCells)
-            {
-                CheckNeighbours(countingCell, listToCheck, isComparing);
-            }
         }
 
         private void RecalculateNodesNeighbours()
@@ -56,15 +42,6 @@ namespace GridField
             node.SetNeighboursAround(neighboursCount);
             
             node.UpdateVisualization();
-        }
-
-        private void CheckNeighbours<T>(CountingCell cell, List<T> listToCheck, bool isComparing) where T : GridCell
-        {
-            int[] neighboursCount = CheckCellNeighbours(cell, listToCheck);
-
-            cell.ArrayToSIdesValues(neighboursCount, isComparing);
-
-            cell.UpdateVisualization();
         }
 
         private void DeactivateVerticalAndHorizontalConnections(GridCell gridCell)
@@ -165,19 +142,13 @@ namespace GridField
             
             if (isCountActive)
             {
-                count = IncrementCounter(count, currentCell, ref isCountActive);
+                count = IncrementCounter(count, currentCell);
                 ConnectionBetweenCellsSetActive(cellToCheck.CellType, currentCell, previousCell, true);
             }
         }
 
-        private int IncrementCounter(int count, GridCell cell, ref bool isCountActive)
+        private int IncrementCounter(int count, GridCell cell)
         {
-            if (cell is CountingCell countingCell)
-            {
-                isCountActive = false;
-                return countingCell.GetFullCapacity();
-            }
-
             count += cell.Capacity;
             return count;
         }
@@ -367,7 +338,7 @@ namespace GridField
         {
             if (cellToCheckType == CellType.empty || cellType == CellType.empty) return false;
             
-            if (cellToCheckType == CellType.simple || cellType == CellType.counting) return false;
+            if (cellToCheckType == CellType.simple) return false;
 
             if (cellType != cellToCheckType && cellType != CellType.universal) return false;
 

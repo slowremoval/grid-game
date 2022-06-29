@@ -8,9 +8,6 @@ namespace GridField.Cells
     {
         [SerializeField] protected GameObject _visualization;
 
-        [SerializeField] protected Color _defaultColor;
-        [SerializeField] protected Color _firstColor;
-        [SerializeField] protected Color _secondColor;
         
         private Image _cellImage;
         
@@ -20,32 +17,35 @@ namespace GridField.Cells
 
         private void Start() => InitializeCellImage();
         
+        [SerializeField] protected Color _defaultColor;
+        [SerializeField] protected Color _lightColor;
+        [SerializeField] protected Color _darkColor;
 
         private void SetColorByClick()
         {
             if (Input.GetMouseButton(0))
             {
-                if (_cellImage.color == _firstColor)
+                if (_cellImage.color == _lightColor)
                 {
                     _cellImage.color = _defaultColor;
                     CellType = CellType.empty;
                 }
                 else
                 {
-                    _cellImage.color = _firstColor;
+                    _cellImage.color = _lightColor;
                     CellType = CellType.light;
                 }
             }
             else if (Input.GetMouseButton(1))
             {
-                if (_cellImage.color == _secondColor)
+                if (_cellImage.color == _darkColor)
                 {
                     _cellImage.color = _defaultColor;
                     CellType = CellType.empty;
                 }
                 else
                 {
-                    _cellImage.color = _secondColor;
+                    _cellImage.color = _darkColor;
                     CellType = CellType.dark;
                 }
             }

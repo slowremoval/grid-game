@@ -21,25 +21,7 @@ namespace GridField.Cells
 
         private Image _currentCellVisualization;
 
-        private bool SideSetActive(int sideNumber)
-        {
-            if (UnactiveSides[sideNumber - 1] == 0)
-            {
-                UnactiveSides[sideNumber - 1] = (CellSide)sideNumber;
-                _unactiveSidesMarkers[sideNumber - 1].SetActive(true);
-            }
-            else
-            {
-                UnactiveSides[sideNumber - 1] = (CellSide)0;
-                _unactiveSidesMarkers[sideNumber - 1].SetActive(false);
-            }
-
-            return UnactiveSides[sideNumber - 1] == 0;
-        }
-
-        private void SideSetActive(int sideNumber, bool setActive) =>
-            _unactiveSidesMarkers[sideNumber - 1].SetActive(setActive);
-
+        
         public void ShowUnactiveSides()
         {
             for (int i = 0; i < UnactiveSides.Length; i++)
@@ -51,10 +33,13 @@ namespace GridField.Cells
             }
         }
 
-        public bool ChangeLeftSideState() => SideSetActive((int)CellSide.left);
-        public bool ChangeRightSideState() => SideSetActive((int)CellSide.right);
-        public bool ChangeUpperSideState() => SideSetActive((int)CellSide.top);
-        public bool ChangeUnderSideState() => SideSetActive((int)CellSide.down);
+        public void ChangeLeftSideState() => SideSetActive((int)CellSide.left);
+
+        public void ChangeRightSideState() => SideSetActive((int)CellSide.right);
+
+        public void ChangeUpperSideState() => SideSetActive((int)CellSide.top);
+
+        public void ChangeUnderSideState() => SideSetActive((int)CellSide.down);
 
         public void SetRequiredAmount(int amount)
         {
@@ -81,6 +66,23 @@ namespace GridField.Cells
 
             UpdateCellVisualization();
         }
+        
+        private void SideSetActive(int sideNumber)
+        {
+            if (UnactiveSides[sideNumber - 1] == 0)
+            {
+                UnactiveSides[sideNumber - 1] = (CellSide)sideNumber;
+                _unactiveSidesMarkers[sideNumber - 1].SetActive(true);
+            }
+            else
+            {
+                UnactiveSides[sideNumber - 1] = (CellSide)0;
+                _unactiveSidesMarkers[sideNumber - 1].SetActive(false);
+            }
+        }
+
+        private void SideSetActive(int sideNumber, bool setActive) =>
+            _unactiveSidesMarkers[sideNumber - 1].SetActive(setActive);
 
         private void OnValidate()
         {
@@ -106,7 +108,6 @@ namespace GridField.Cells
                     _color = Color.white;
                     _color.a = 0.1f;
                     break;
-
                 case CellType.dark:
                     _color = Color.grey;
                     _color.a = 0.81f;
@@ -137,10 +138,6 @@ namespace GridField.Cells
                     _color = Color.cyan;
                     _color.a = 0.8f;
                     break;
-                case CellType.counting:
-                    _color = Color.red;
-                    _color.a = 0.7f;
-                    break;
                 case CellType.universalRotating:
                     _color = Color.cyan;
                     _color.a = 0.7f;
@@ -148,6 +145,7 @@ namespace GridField.Cells
                 case CellType.darkNodeRotating:
                     _color = Color.gray;
                     _color.a = 0.7f;
+                    _textMeshProUGUI.text = $"Rotating\n_{CellCapacity}";
                     break;
                 case CellType.darkStableRotating:
                     _color = Color.gray;
@@ -156,6 +154,7 @@ namespace GridField.Cells
                 case CellType.lightNodeRotating:
                     _color = Color.yellow;
                     _color.a = 0.81f;
+                    _textMeshProUGUI.text = $"Rotating\n_{CellCapacity}";
                     break;
                 case CellType.lightStableRotating:
                     _color = Color.yellow;
@@ -168,6 +167,8 @@ namespace GridField.Cells
             }
         }
 
+        #region CellType Set Buttons
+        
         public void SetCellType(CellType cellType)
         {
             ThisCellType = cellType;
@@ -230,13 +231,6 @@ namespace GridField.Cells
             UpdateCellVisualization();
         }
 
-        public void SetCountingCell()
-        {
-            ThisCellType = CellType.counting;
-            CellCapacity = 0;
-            UpdateCellVisualization();
-        }
-
         public void SetUniversalRotatingCell()
         {
             ThisCellType = CellType.universalRotating;
@@ -272,4 +266,6 @@ namespace GridField.Cells
             UpdateCellVisualization();
         }
     }
+    
+    #endregion 
 }

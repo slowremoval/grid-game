@@ -8,6 +8,10 @@ namespace GridField.Cells
         [SerializeField] private GameObject _visualization;
         private Image _nodeVisualization;
 
+        [SerializeField] protected Color _stableLightColor;
+        [SerializeField] protected Color _stableDarkColor;
+        [SerializeField] protected Color _universalColor;
+        
         private void Start()
         {
             UpdateTypeVisualization();
@@ -23,22 +27,22 @@ namespace GridField.Cells
             switch (CellType)
             {
                 case CellType.dark:
-                    color = Color.gray;
+                    color = _stableDarkColor;
                     break;
                 case CellType.light:
-                    color = Color.yellow;
+                    color = _stableLightColor;
                     break;
                 case CellType.universal:
-                    color = Color.cyan;
+                    color = _universalColor;
                     break;
                 case CellType.stableDark:
                     CellType = CellType.dark;
-                    color = Color.gray;
+                    color = _stableDarkColor;
                     color.a = 0.7f;
                     break;
                 case CellType.stableLight:
                     CellType = CellType.light;
-                    color = Color.yellow;
+                    color = _stableLightColor;
                     color.a = 0.42f;
                     break;
                 default:

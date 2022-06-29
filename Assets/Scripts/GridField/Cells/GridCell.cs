@@ -13,7 +13,6 @@ namespace GridField.Cells
         [HideInInspector] public int Capacity;
         public CellType CellType;
 
-
         public event Action<GridCell> OnVisualizationChanged;
 
         public CellConnectionProvider CellConnectionProvider;

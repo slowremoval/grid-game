@@ -9,9 +9,9 @@ namespace GridField
     public class GridConstructor : Grid
     {
         [Header("Grid Size")] [Range(0, 17)] [SerializeField]
-        public int _colsCount;
+        public int ColsCount;
 
-        [Range(0, 11)] [SerializeField] public int _rowsCount;
+        [Range(0, 11)] [SerializeField] public int RowsCount;
 
         [Space] [SerializeField] private GameObject _cellPrefab;
         [SerializeField] private GameObject _cellConstructPrefab;
@@ -19,7 +19,6 @@ namespace GridField
         [SerializeField] private GameObject _cellEmptyPrefab;
         [SerializeField] private GameObject _cellRotatingPrefab;
         [SerializeField] private GameObject _cellStablePrefab;
-        [SerializeField] private GameObject _cellCountingPrefab;
         [SerializeField] private GameObject _cellStaticRotatingPrefab;
         [SerializeField] private GameObject _cellNodeRotatingPrefab;
 
@@ -67,13 +66,13 @@ namespace GridField
             SubscribeToSimpleCellsChanging();
         }
 
-        public SaveData LoadLevel(string levelNumber)
+        private SaveData LoadLevel(string levelNumber)
         {
             string loadPath = Application.dataPath + string.Format($"/Resources/Levels/Level_{levelNumber}.json");
 
             if (!File.Exists(loadPath))
             {
-                Debug.Log($"{loadPath} doesn`t exist!");
+                Debug.LogError($"{loadPath} doesn`t exist!");
                 return null;
             }
 
@@ -107,9 +106,9 @@ namespace GridField
             GenerateGrid(_cellConstructPrefab);
             int count = 0;
 
-            for (int i = 0; i < _rowsCount; i++)
+            for (int i = 0; i < RowsCount; i++)
             {
-                for (int j = 0; j < _colsCount; j++)
+                for (int j = 0; j < ColsCount; j++)
                 {
                     GridCellConstruct currentCell = _allGridElements[i, j].GetComponent<GridCellConstruct>();
                     currentCell.SetCellType(loadedLvl.CellTypes[count]);
@@ -140,8 +139,8 @@ namespace GridField
         private void SetGridProperties(int rowsCount, int colsCount)
         {
             _allGridElements = new GridCell[rowsCount, colsCount];
-            _colsCount = colsCount;
-            _rowsCount = rowsCount;
+            ColsCount = colsCount;
+            RowsCount = rowsCount;
         }
 
         private void Awake()
@@ -151,11 +150,11 @@ namespace GridField
 
         private void GenerateGrid(GameObject cellPrefab)
         {
-            SetGridProperties(_rowsCount, _colsCount);
+            SetGridProperties(RowsCount, ColsCount);
 
-            for (int i = 0; i < _rowsCount; i++)
+            for (int i = 0; i < RowsCount; i++)
             {
-                for (int j = 0; j < _colsCount; j++)
+                for (int j = 0; j < ColsCount; j++)
                 {
                     var cell = InstantiateCell(cellPrefab, i, j);
 
@@ -228,9 +227,9 @@ namespace GridField
 
             int count = 0;
 
-            for (int i = 0; i < _rowsCount; i++)
+            for (int i = 0; i < RowsCount; i++)
             {
-                for (int j = 0; j < _colsCount; j++)
+                for (int j = 0; j < ColsCount; j++)
                 {
                     switch (lvl.CellTypes[count])
                     {
@@ -261,12 +260,9 @@ namespace GridField
                             ConfigureCell<GridCell>(lvl, i, j, count, _cellStablePrefab, Cells,
                                 CellType.universal);
                             break;
-                        case CellType.counting:
-                            ConfigureCell<CountingCell>(lvl, i, j, count, _cellCountingPrefab, CountingCells,
-                                CellType.counting);
-                            break;
                         case CellType.universalRotating:
-                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStaticRotatingPrefab, Cells, CellType.universal);
+                            ConfigureCell<GridCell>(lvl, i, j, count, _cellStaticRotatingPrefab, Cells,
+                                CellType.universal);
                             break;
                         case CellType.darkStableRotating:
                             ConfigureCell<GridCell>(lvl, i, j, count, _cellStaticRotatingPrefab, Cells,
@@ -353,9 +349,8 @@ namespace GridField
             }
 
             Nodes = new List<CellNode>();
-            CountingCells = new List<CountingCell>();
             Cells = new List<GridCell>();
-            
+
             foreach (var cell in _allGridElements)
             {
                 Destroy(cell.gameObject);

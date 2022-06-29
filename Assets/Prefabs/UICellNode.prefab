@@ -383,12 +383,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Coordinates: {x: 0, y: 0}
   UnactiveSides: 
-  Capacity: 0
-  CellConnectionProvider: {fileID: 4917702919658098632}
   GridData: {fileID: 0}
+  Capacity: 0
+  CellType: 0
+  CellConnectionProvider: {fileID: 4917702919658098632}
   _visualization: {fileID: 4216267878747710793}
+  _stableLightColor: {r: 1, g: 0.77254903, b: 0, a: 1}
+  _stableDarkColor: {r: 0.5754717, g: 0.3936009, b: 0.3936009, a: 1}
+  _universalColor: {r: 0.42352942, g: 0.5568628, b: 0.2901961, a: 1}
   _textMeshProUGUI: {fileID: 8005190797773498950}
-  CurrentAmount: 0
 --- !u!114 &8555249524698853353
 MonoBehaviour:
   m_ObjectHideFlags: 0

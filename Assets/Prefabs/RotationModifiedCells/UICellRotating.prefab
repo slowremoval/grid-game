@@ -404,15 +404,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Coordinates: {x: 0, y: 0}
-  UnactiveSides: 00000000000000000000000000000000
+  UnactiveSides: 
   GridData: {fileID: 0}
-  Capacity: 1
+  Capacity: 0
   CellType: 0
   CellConnectionProvider: {fileID: 7691520063319575492}
   _visualization: {fileID: 1229581908279175616}
-  _defaultColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
-  _firstColor: {r: 1, g: 0.8135679, b: 0, a: 1}
-  _secondColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+  _defaultColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
+  _lightColor: {r: 0.8932955, g: 1, b: 0, a: 1}
+  _darkColor: {r: 0.8509804, g: 0.38979498, b: 0.14117648, a: 1}
 --- !u!1 &2324603811168505600
 GameObject:
   m_ObjectHideFlags: 0
