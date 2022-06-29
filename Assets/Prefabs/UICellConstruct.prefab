@@ -136,8 +136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Coordinates: {x: 0, y: 0}
   UnactiveSides: 
-  CellConnectionProvider: {fileID: 0}
   GridData: {fileID: 0}
+  Capacity: 0
+  CellType: 0
+  CellConnectionProvider: {fileID: 0}
   _textMeshProUGUI: {fileID: 1655256133389681547}
   _visualization: {fileID: 7735574299297985974}
   _unactiveSidesMarkers:
@@ -313,8 +315,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

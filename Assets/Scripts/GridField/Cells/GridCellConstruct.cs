@@ -112,7 +112,6 @@ namespace GridField.Cells
                     _color.a = 0.81f;
                     _textMeshProUGUI.text += $"\n_{CellCapacity}";
                     break;
-
                 case CellType.light:
                     _color = Color.yellow;
                     _color.a = 0.81f;
@@ -141,6 +140,26 @@ namespace GridField.Cells
                 case CellType.counting:
                     _color = Color.red;
                     _color.a = 0.7f;
+                    break;
+                case CellType.universalRotating:
+                    _color = Color.cyan;
+                    _color.a = 0.7f;
+                    break;
+                case CellType.darkNodeRotating:
+                    _color = Color.gray;
+                    _color.a = 0.7f;
+                    break;
+                case CellType.darkStableRotating:
+                    _color = Color.gray;
+                    _color.a = 0.42f;
+                    break;
+                case CellType.lightNodeRotating:
+                    _color = Color.yellow;
+                    _color.a = 0.81f;
+                    break;
+                case CellType.lightStableRotating:
+                    _color = Color.yellow;
+                    _color.a = 0.42f;
                     break;
                 default: 
                     _color = Color.magenta;
